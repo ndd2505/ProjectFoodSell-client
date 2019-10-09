@@ -1,0 +1,10 @@
+form{
+    background-color: white;
+    text-align: center;
+}
+label{
+    float: left;
+}
+input{
+    width: 100%;
+}

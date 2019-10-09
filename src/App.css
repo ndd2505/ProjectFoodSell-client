@@ -1,0 +1,43 @@
+.App{
+  width: 100%;
+  align-content: center;
+  margin: auto;
+}
+nav{
+  display: flex;
+  vertical-align: center;
+  justify-content: space-around;
+  align-items: center;
+  height: 50px;
+  background-color: darkorange;
+}
+.HeaderImg{
+  width: 100%;
+  height: 180px;
+}
+.logo{
+  width: 50px;
+  height: 40px;
+}
+.nav-links{
+  position: relative;
+  float: right;
+  width: 35%;
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+}
+.reusebar{
+  background-color: black;
+}
+h1{
+  text-align: center;
+  color: whitesmoke;
+  background-color: black;
+  font-family: 'Times New Roman', Times, serif;
+}
+.col-9{
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+}
