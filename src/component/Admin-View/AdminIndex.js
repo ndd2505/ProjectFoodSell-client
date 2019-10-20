@@ -32,10 +32,10 @@ class AdminIndex extends React.Component {
       <div >
         <NavBar navitems={this.navitems}/>
         <div className='row'>
-          <div className='col-2'>
+          <div className='col-3 col-md-2 col-lg-2 col-sm-3 col-xs-3'>
             <h1>SideBar</h1>
           </div>
-          <div className='col-8'>
+          <div className='col-6 col-md-8 col-ls-8 col-sm-6 col-xs-6'>
             <Switch>
               <Route path="/admin/logout" />
               <Route path="/admin" exact component={ManageProduct}/>
@@ -48,7 +48,7 @@ class AdminIndex extends React.Component {
               <Route path='/admin/customer' component={CustomerManager}/>
             </Switch>
           </div>
-          <div className='col-2'>
+          <div className='col-3 col-md-2 col-lg-2 col-sm-3 col-xs-3'>
             <h1>Ad</h1>
           </div>
         </div>

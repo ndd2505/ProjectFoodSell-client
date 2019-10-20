@@ -18,7 +18,6 @@ const PrivateRoute = ({component: Component, ...rest }) =>(
 class App extends React.Component {
   componentDidMount(){
     this.setState()
-    console.log('mounted app')
   }
   render(){
   return (

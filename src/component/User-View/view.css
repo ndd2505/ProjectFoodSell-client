@@ -1,5 +1,6 @@
 .cardProduct{
     width: 100%;
+    position: relative;
 }
 .viewproduct{
     position: relative;

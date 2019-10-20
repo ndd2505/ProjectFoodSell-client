@@ -8,7 +8,7 @@ import SideBar from '../ReUseAble/SideBar';
 import LogIn from './Login';
 import SignUp from './SignUp';
 import ForgotPass from './forgotpass';
-
+import CartPage from "./CartPage"
 const memberAuth = false
 const PrivateRoute = ({component: Component, ...rest }) =>(
   <Route {...rest} render={(props) =>(
@@ -38,23 +38,22 @@ class CustomerIndex extends React.Component{
             <div>
                 <NavBar navitems={this.navitems}/>
                 <div className='row'>
-                    <div className='col-2'>
-                        <SideBar />
+                    <div className='col-3 col-md-2 col-lg-2 col-sm-3 col-xs-3'>
+                        <h1>123</h1>
                     </div>
-                    <div className='col-8'>
-            
-                <Switch>
-                    <Route path='/' exact component={ProductShow}/>
-                    <Route path="/home" exact component={ProductShow}/>
-                    <Route path="/home/about" component={About}/> 
-                    <PrivateRoute path="/home/login" component={LogIn}/>
-                    <PrivateRoute path="/home/signup" component={SignUp}/>
-                    <PrivateRoute path="/home/forgot" component={ForgotPass} />                           
-                </Switch>
-            
-            </div>
-                    <div className='col-2'>
-                        <h1>AdHere</h1>
+                    <div className='col-6 col-md-8 col-ls-8 col-sm-6 col-xs-6' style={{left: "0px"}}>
+                        <Switch>
+                            <Route path='/' exact component={ProductShow}/>
+                            <Route path="/home" exact component={ProductShow}/>
+                            <Route path="/home/about" component={About}/> 
+                            <PrivateRoute path="/home/login" component={LogIn}/>
+                            <PrivateRoute path="/home/signup" component={SignUp}/>
+                            <PrivateRoute path="/home/forgot" component={ForgotPass} />
+                            <Route path="/home/cart" component={CartPage}/>                           
+                        </Switch>
+                    </div>
+                    <div className='col-3 col-md-2 col-lg-2 col-sm-3 col-xs-3' style={{left:"0px"}}>
+                    <img width="20%" className="banner" src="../../../image/banner.jpg" alt="Ad"/>
                     </div>
                 </div>
             </div>

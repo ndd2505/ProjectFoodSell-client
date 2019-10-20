@@ -2,6 +2,14 @@ import React from 'react';
 import SearchTool from '../ReUseAble/SearchTool';
 import NextPrev from '../ReUseAble/NextPrev';
 import './view.css';
+import { connect } from "react-redux"
+
+const addtocart = (cartitem)=>{
+  return{
+      type: "add",
+      cartitem
+  }
+}
 
 class ProductShow extends React.Component {
 
@@ -11,7 +19,8 @@ class ProductShow extends React.Component {
           rows: [],
           sortitem: 'productid',
           sortdes: 'ASC',
-          searchobj: ''
+          searchobj: '',
+          limititem: null,
         }
         this.inputsearch= React.createRef();
       }
@@ -19,21 +28,21 @@ class ProductShow extends React.Component {
       componentDidMount() {
         fetch('/product/?orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
         .then((res) => res.json())
-        .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))
+        .then(rows => this.setState({rows: rows}))
       }
     
         next = ()=>{
             this.i=this.i+9
             fetch('/product/?search='+this.state.searchobj+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
             .then((res) => res.json())
-            .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows))) 
+            .then(rows => this.setState({rows: rows})) 
         }
         prev = () =>{
             if(this.i>0){
                 this.i=this.i-9
                 fetch('/product/?search='+this.state.searchobj+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
                 .then((res) => res.json())
-                .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows))) 
+                .then(rows => this.setState({rows: rows})) 
             }  
         }
         setSearchText=(text)=>{
@@ -41,12 +50,12 @@ class ProductShow extends React.Component {
           if(text===''){
             fetch('/product/?search='+text+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
             .then((res) => res.json())
-            .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))  
+            .then(rows => this.setState({rows: rows}))  
           }
           else{
           fetch('/product/?search='+text+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
           .then((res) => res.json())
-          .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))
+          .then(rows => this.setState({rows: rows}))
           }
         }
         
@@ -55,36 +64,34 @@ class ProductShow extends React.Component {
           this.setState({sortitem: sortitem, sortdes: sortdes})
           fetch('/product/?search='+this.state.searchobj+'&orderby='+sortitem+'&sort='+sortdes+'&offset='+parseInt(this.i)+'&max=9')
           .then((res) => res.json())
-          .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))  
+          .then(rows => this.setState({rows: rows}))  
         }
 
     render(){
         return(
             <div className='viewproduct'>
         <SearchTool sortby='Price' sortid='price' sortname='productname' sort={this.sort} onSet={this.setSearchText}/>
-      <div className="cardProduct">
-        <div className='row card-group' style={{ width: '60rem'}}>
+      <div className="cardProduct" style={{left: "0px", position: "relative", width:"100%", top: "40px", borderBottom:"1px solid darkorange"}}>
+        <div className='row card-group' style={{ minWidth: '60px', position:"relative", width:"100%", margin:"0px"}}>
           {this.state.rows.map(row =>
-            <div className='text-center col-4' style={{color:'darkorange'}} key={row.productid}>
-                <img src={row.image} height='170px' className='card-img-top' alt={row.productname}/>
-                <div className='card-body' style={{height: '140px'}}>
-                  <h4 className='card-title'>{row.productname}</h4>
-                  <small className='card-text'>{row.info}</small>
+            <div id="card" className='text-center col-xs-12 col-sm-6 col-md-4 col-lg-4' style={{position:"relative", color:'darkorange'}} key={row.productid}>
+                <img style={{width:"19.9vw", height:'13.6vw'}} src={row.image} className='card-img-top' alt={row.productname}/>
+                <div className='card-body' style={{padding:"5%"}}>
+                  <p style={{minHeight:"5.25vw", maxHeight:"5.25vw" ,fontSize:"1.7vw", margin:"0px"}} className='card-title'>{row.productname}</p>
+                  <p style={{minHeight:"3.5vw", maxHeight:"3.5vw" ,fontSize:"1vw"}} className='card-text'>{row.info}</p>
                 </div>
-                <div className='card-footer'>
-                  <h5 className=' card-text'>{row.price}</h5>
-                  <button className='btn btn-warning' style={{width:'100%'}}>Buy</button>
+                <div className='card-footer' style={{padding:"5%"}}>
+                  <p style={{fontSize:"1.7vw", margin:"0px"}} className=' card-text'>{row.price}</p>
+                  <button className='btn btn-warning' style={{width:'18vw', height:"2.7vw", fontSize:"1.1vw"}} onClick={()=>this.props.dispatch(addtocart(row))}>Buy</button>
                 </div>
             </div>
             )}
         </div>  
       </div> 
-        <div >
-          <NextPrev next={this.next} prev={this.prev} dis={this.i<=0}/>
-        </div>   
+          <NextPrev limit={this.state.rows.length  !== 9} next={this.next} prev={this.prev} dis={this.i<=0}/>
       </div>
         )
     }
 }
 
-export default ProductShow
+export default connect()(ProductShow)

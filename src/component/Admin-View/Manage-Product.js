@@ -88,7 +88,7 @@ class ManageProduct extends React.Component {
       <div className="cardProduct">
         <div className='row card-group'>
           {this.state.rows.map(row =>
-            <div className='text-center col-4' style={{color:'darkorange', border: '1px solid darkorange'}} key={row.productid} >
+            <div className='text-center  col-xs-12 col-sm-6 col-md-4 col-lg-4' style={{color:'darkorange', border: '1px solid darkorange'}} key={row.productid} >
                 <img src={row.image} height='170px' className='card-img-top' alt={row.productname}/>
                 <div className='card-body' style={{height: '140px'}}>
                   <h4 className='card-title'>{row.productname}</h4>
@@ -103,7 +103,7 @@ class ManageProduct extends React.Component {
         </div>  
       </div> 
         <div >
-          <NextPrev next={this.next} prev={this.prev} dis={this.i<=0}/>
+          <NextPrev limit={this.state.rows.length !== 9} next={this.next} prev={this.prev} dis={this.i<=0}/>
         </div>   
       </div>
   )

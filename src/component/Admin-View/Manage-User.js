@@ -109,7 +109,7 @@ class ManageUser extends React.Component {
             )}
         </tbody>   
       </table>
-      <NextPrev next={this.next} prev={this.prev} dis={this.i<=0}/>
+      <NextPrev limit={this.state.rows.length !== 6} next={this.next} prev={this.prev} dis={this.i<=0}/>
       </div>
   );
   }

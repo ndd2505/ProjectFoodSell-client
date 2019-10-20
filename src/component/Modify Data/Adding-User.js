@@ -25,7 +25,7 @@ class Adding extends React.Component{
                     <input name='email' className="form-control" type='email' aria-describedby="emailHelp" placeholder='Your Email...'></input>
                 </div>
                 <div className='form-group'>
-                    <Link><button className='btn btn-danger' >Cancel</button></Link>
+                    <Link to="/admin"><button className='btn btn-danger' >Cancel</button></Link>
                     <button className='btn btn-primary' type='submit'>Add</button>
                 </div>
             </form>
