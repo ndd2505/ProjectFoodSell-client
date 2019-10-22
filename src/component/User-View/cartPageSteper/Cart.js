@@ -13,7 +13,8 @@ class Cart extends React.Component{
     constructor(props){
         super(props);
         this.state ={
-            total: 0
+            total: 0,
+            cashOutError: ""
         }
     }
     
@@ -39,8 +40,24 @@ class Cart extends React.Component{
         )
     }
 
+    validate = () =>{
+        let cashOutError = ""
+        if(this.props.productincart.length === 0){
+            cashOutError = " Chưa có sản phẩm nào trong giỏ hàng !!!"
+            this.setState({cashOutError: cashOutError})
+            return false
+        }else{
+            return true
+        }
+    }
+    handleSubmit=(func)=>{
+        const valid = this.validate()
+        if(valid){
+            return func()
+        }
+    }
+
     render(){
-        console.log(this.props.productincart.length)
     return(
             <div className=" bodycartpage">
                 <div className="row" style={{paddingTop: "40px", paddingBottom:"20px", position:"relative", left:"0px", minHeight: "500px" }}>
@@ -82,7 +99,7 @@ class Cart extends React.Component{
                     </div>
                     <div className="col-6 col-sm-5 col-xs-6 col-md-4" style={{padding:"0px", paddingLeft:"1vw",borderLeft: "1px solid darkorange", position:"sticky", maxHeight:"500px", top:"10px"}}>
                         <div className="card" style={{margin: "0px",position:"unset",background:"transparent",fontFamily:"monospace",left:"-20px" ,maxWidth: "100%",color:"darkorange", maxHeight:"400px", minHeight:"100px"}}>
-                            <div className=" cardheader" style={{textAlign: "center", fontSize: "2.6vw",height:"40px"}}>Total</div>
+                            <div className=" cardheader" style={{textAlign: "center", fontSize: "2.6vw",height:"4vw"}}>Total</div>
                             <table className=" cardbody table table-sm table-borderless" style={{ top:"80px",color:"darkorange" ,fontSize:"1.3vw"}}>
                                 <tbody>
                                     <tr style={{borderBottom:"1px solid darkorange"}}>
@@ -103,7 +120,10 @@ class Cart extends React.Component{
                         <div style={{position:"relative", top:"2vw"}}>
                             <img  style={{ height:"1.5vw", position:"relative"}} src="../../../image/creditcard.png" width="40%" alt="creditcard"/>
                             <br/>
-                            <button className=" btn btn-danger" style={{fontSize:"1.2vw", width:"19vw", height:"3vw", padding:"0px", position:"relative"}} onClick={this.props.next}>Thanh Toan</button>
+                            <button className=" btn btn-danger" style={{fontSize:"1.2vw", width:"19vw", height:"3vw", padding:"0px", position:"relative"}} onClick={()=>{this.handleSubmit(this.props.next)}}>Thanh Toan</button>
+                            <div style={{textAlign: "center", color:"red", fontSize:"1.4vw"}}>
+                                {this.state.cashOutError}
+                            </div>
                         </div>
                     </div>
                 </div>

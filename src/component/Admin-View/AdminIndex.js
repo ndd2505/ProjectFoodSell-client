@@ -7,6 +7,7 @@ import UpdateUser from '../Modify Data/Update-User';
 import ManageProduct from './Manage-Product';
 import AddingProduct from '../Modify Data/Adding-Product';
 import UpdateProduct from '../Modify Data/Update-Product';
+import Orders from "./Orders"
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import CustomerManager from './Customer-Manager';
@@ -37,6 +38,7 @@ class AdminIndex extends React.Component {
           </div>
           <div className='col-6 col-md-8 col-ls-8 col-sm-6 col-xs-6'>
             <Switch>
+              <Route path="/admin/orders" component={Orders}/>
               <Route path="/admin/logout" />
               <Route path="/admin" exact component={ManageProduct}/>
               <Route path="/admin/adduser" component={Adding}/>

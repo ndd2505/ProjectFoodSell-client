@@ -1,6 +1,5 @@
 import React from 'react';
 import './SearchTool.css';
-import { width } from '@material-ui/system';
 
 
 class SearchTool extends React.Component{

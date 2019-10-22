@@ -1,38 +1,145 @@
 import React from "react";
+import ErrorIcon from '@material-ui/icons/Error';
+import tphcm from "../../../tphcm";
 
-export default function UserOrderInfo(props){
+export default class UserOrderInfo extends React.Component{
+  
+    constructor(props){
+        super(props)
+
+        this.state={
+          orderName:"",
+          orderPhone:"",
+          orderEmail:"",
+          orderAddress:"",
+          orderAddressWard:"",
+          orderAddressDistrict:"",
+          orderNameError:"",
+          orderPhoneError:"",
+          orderEmailError:"",
+          orderAddressError:"",
+          orderAddressWardError:"",
+          orderAddressDistrictError:"",
+        }
+    }
+
+    hanldeInput =(e)=>{
+        this.setState({[e.target.name]: e.target.value})
+    }
+    
+    validation=()=>{
+      let orderNameError="";
+      let orderPhoneError="";
+      let orderEmailError="";
+      let orderAddressError="";
+      let orderAddressWardError="";
+      let  orderAddressDistrictError="";
+      if(this.state.orderName === ""){
+        orderNameError = "Vui lòng nhập tên đầy đủ !"
+      }
+      if(this.state.orderPhone === ""){
+        orderPhoneError = "Vui lòng nhập số điẹn thoại !"
+      }else{
+        if(isNaN(this.state.orderPhone) ||  this.state.orderPhone.split("")[0] !== "0" || this.state.orderPhone.length !== 10){
+          orderPhoneError = "Số điện thoại không hợp lệ !"
+        }
+      }
+      if(this.state.orderEmail === ""){
+        orderEmailError = "Vui lòng nhập email !"
+      }else{
+        if(!this.state.orderEmail.includes("@gmail.com")){
+          orderEmailError = "Email không hợp lệ !"
+        }
+      }
+      if(this.state.orderAddress === ""){
+        orderAddressError = "Vui lòng nhập địa chỉ !"
+      }
+      if(this.state.orderAddressWard === ""){
+        orderAddressWardError = "Vui lòng chọn khu vực !"
+      }
+      if(this.state.orderAddressDistrict === ""){
+        orderAddressDistrictError = "Vui lòng chọn khu vực !"
+      }
+      if(orderNameError || orderPhoneError || orderEmailError || orderAddressError || orderAddressDistrictError || orderAddressWardError){
+        this.setState({orderNameError, orderPhoneError, orderEmailError, orderAddressError, orderAddressDistrictError, orderAddressWardError})
+        return false
+      }else{
+        return true
+      }
+    }
+
+    handleSubmit =(func)=>{
+      const valid = this.validation()
+      if(valid){
+        return func()
+      }
+    }
+    render(){
+      
     return(
-        <div className="userorderinfo" style={{position:"relative", textAlign:"center" }}>
+        <div className="userorderinfo needs-validation" noValidate style={{position:"relative", textAlign:"center" }}>
             <div className="form-group">
                 <label style={{color:"darkorange"}}>Họ Và Tên</label>
-                <input className="form-control" type="text"></input>
+                <input name="orderName" className="form-control" type="text" value={this.state.orderName} onChange={(e)=>this.hanldeInput(e)}></input>
+                <div style={{textAlign:"right", color:"red", fontSize:"1.2vw"}}>
+                  {(this.state.orderNameError) ? <ErrorIcon/> : null}
+                  {this.state.orderNameError}
+                </div>
             </div>
             <div className="form-group">
                 <label style={{color:"darkorange"}}>Số Điện Thoại</label>
-                <input className="form-control" type="text"></input>
+                <input name="orderPhone" className="form-control" type="text" value={this.state.orderPhone} onChange={(e)=>this.hanldeInput(e)}></input>
+                <div style={{textAlign:"right", color:"red", fontSize:"1.2vw"}}>
+                  {(this.state.orderPhoneError) ? <ErrorIcon /> : null}
+                  {this.state.orderPhoneError}
+                </div>
             </div>
             <div className="form-group">
                 <label style={{color:"darkorange"}}>Email</label>
-                <input className="form-control" type="text"></input>
+                <input name="orderEmail" className="form-control" type="text" value={this.state.orderEmail} onChange={(e)=>this.hanldeInput(e)}></input>
+                <div style={{textAlign:"right", color:"red", fontSize:"1.2vw"}}>
+                  {(this.state.orderEmailError) ? <ErrorIcon /> : null}
+                  {this.state.orderEmailError}
+                </div>
             </div>
             <div className="form-group">
                 <label style={{color:"darkorange"}}>Địa Chỉ</label>
-                <input className="form-control" type="text"></input>
+                <input name="orderAddress" className="form-control" type="text" value={this.state.orderAddress} onChange={(e)=>this.hanldeInput(e)}></input>
+                <div style={{textAlign:"right", color:"red", fontSize:"1.2vw"}}>
+                  {(this.state.orderAddressError) ? <ErrorIcon /> : null}
+                  {this.state.orderAddressError}
+                </div>
                 <br/>
                 <div className="row">
                     <div className="col">
-                        <select class="form-control" style={{padding:"0px"}}>
-                            <option>Phường 1</option>
+                        <select name="orderAddressDistrict" className="form-control" style={{padding:"0px"}} value={this.state.orderAddressDistrict} onChange={(e)=>this.hanldeInput(e)}>
+                            <option></option>
+                            {tphcm.map((district, index) => 
+                                <option key={index}>{district.name}</option>
+                                )}
                         </select>
+                        <div style={{textAlign:"right", color:"red", fontSize:"1.2vw"}}>
+                          {(this.state.orderAddressDistrictError) ? <ErrorIcon /> : null}
+                          {this.state.orderAddressDistrictError}
+                        </div>
                     </div>
                     <div className="col">
-                        <select class="form-control" style={{padding:"0px"}}>
-                            <option>Quận 1</option>
+                        <select name="orderAddressWard" className="form-control" style={{padding:"0px"}} value={this.state.orderAddressWard} onChange={(e)=>this.hanldeInput(e)}>
+                            <option></option>
+                            {
+                            (this.state.orderAddressDistrict === "") ? null 
+                            : tphcm.find((district)=>{return district.name === this.state.orderAddressDistrict}).district.map((ward, index)=><option key={index}>{ward}</option>)
+                            }
                         </select>
+                        <div style={{textAlign:"right", color:"red", fontSize:"1.2vw"}}>
+                          {(this.state.orderAddressWardError) ? <ErrorIcon /> : null}
+                          {this.state.orderAddressWardError}
+                        </div>
                     </div>
                 </div>
             </div>
-            <button className="btn btn-primary" onClick={props.next}>Xác Nhận</button>
+            <button className="btn btn-primary"  onClick={()=>{this.handleSubmit(this.props.next)}}>Xác Nhận</button>
         </div>
     )
+    }
 }

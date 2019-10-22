@@ -4,11 +4,22 @@ import './account.css';
 import {Redirect} from 'react-router-dom';
 
 class Login extends React.Component{
+
+  constructor(props){
+    super(props);
+    this.state={
+      username: "",
+      password: "",
+    }
+  }
   
   handlesubmit = ()=>{
     return(
       <Redirect to='/home' />
     )
+  }
+  hanldeInput = (e)=>{
+    this.setState({[e.target.name]: e.target.value})
   }
 
   render(){
@@ -19,26 +30,23 @@ class Login extends React.Component{
               <h1>Sign In</h1>
             </div>
             <div className='card-body' >
-              <form action='/login' method='post' style={{backgroundColor: 'black'}}>
+              <div style={{backgroundColor: 'black'}}>
                 <div className="input-group form-group">
                   <div className="input-group-prepend">
                     <span className="input-group-text">UserName</span>
                   </div>
-                  <input name='username' type="text" className="form-control" placeholder="username"></input>	
+                  <input name='username' type="text" className="form-control" placeholder="username" value={this.state.username} onChange={(e)=>{this.hanldeInput(e)}}></input>	
                 </div>
                 <div className="input-group form-group">
                   <div className="input-group-prepend">
                     <span className="input-group-text">Password</span>
                   </div>
-                  <input name='password' type="password" className="form-control" placeholder="password"></input>
-              </div>
-              <div className="row align-items-center remember">
-                <input type="checkbox"></input>Remember Me
+                  <input name='password' type="password" className="form-control" placeholder="password" value={this.state.password} onChange={(e)=>{this.hanldeInput(e)}}></input>
               </div>
               <div className="form-group">
-                <button type="submit" value="Login" className="btn float-right login_btn">Sign In</button>
+                <button value="Login" className="btn float-right login_btn">Sign In</button>
               </div>
-              </form>
+              </div>
             </div>
             <div className="card-footer">
               <div className="d-flex justify-content-center links">
