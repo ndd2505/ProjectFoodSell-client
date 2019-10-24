@@ -20,17 +20,21 @@ export default class OrderDetail extends React.Component{
         fetch("/orderplacerdetail/"+this.props.match.params.id+"")
         .then((res)=>res.json())
         .then(rows => this.setState({orderplacer: rows[0]}))
-        
     }
 
     render(){
-        console.log(this.state.orderdetail[0])
         return(
             <div style={{fontSize:"0.8vw"}}>
-                <div  style={{textAlign:"left", color:"white",fontSize:"2vw" ,borderBottom:"1px solid darkorange"}}>
-                    Ma Don Hang: #{this.state.orderplacer.orderid}
+                <div  style={{textAlign:"left", color:"white",fontSize:"2vw", marginBottom:"1.5vw",paddingBottom:"1.5vw" ,marginTop:"1.5vw" ,borderBottom:"1px solid darkorange"}}>
+                    Ma Don Hang: <span className="badge badge-secondary">#{this.state.orderplacer.orderid}</span>
                     <br/>
-                    Trang Thai Don Hang: {this.state.orderplacer.orderstatus}
+                    Trang Thai Don Hang: {(this.state.orderplacer.orderstatus === "Done") ? <span className="badge badge-success">Order Success</span>
+                    : (this.state.orderplacer.orderstatus === "Undone") ? <span className="badge badge-warning">Order Processing</span> 
+                    : <span className="badge badge-danger">Canceled</span>    
+                    }
+                    <br/>
+                    Thoi Gian Dat Hang: <span className="badge-secondary">{this.state.orderplacer.timeorder} </span>
+                    <br/>
                 </div>
                 <div className="row card-deck" style={{textAlign:"left",margin:"0px", color:"white", borderBottom:"1px solid darkorange"}}>
                         <div className="card col-4 col-md-4 col-xs-4 col-sm-4 col-lg-4" style={{padding:"0px", border:"0px", backgroundColor:"darkorange", margin:"1vw"}}>
@@ -59,17 +63,17 @@ export default class OrderDetail extends React.Component{
                         </div>
                         
                         <div className="card-body"  style={{color:"darkorange", padding:"0.9vw"}}>
-                            Tong Tien(Truoc Giam Gia): {this.state.orderplacer.total}
+                            Tong Tien(Truoc Giam Gia): {this.state.orderplacer.total + " VND"}
                             <br/>
-                            Giam Gia: {this.state.orderplacer.promotion}
+                            Giam Gia: {this.state.orderplacer.promotion +" VND"}
                             <br/>
-                            Tong Tien(Phai Thanh Toan): {this.state.orderplacer.total - this.state.orderplacer.promotion}
+                            Tong Tien(Phai Thanh Toan): {this.state.orderplacer.total - this.state.orderplacer.promotion +" VND"}
                         </div>
                     </div>
                 </div>
                 <div style={{textAlign:"left", marginTop:"3vw"}}>
                     <table className="table">
-                        <thead  >
+                        <thead>
                             <tr className="row" style={{color:"white"}}>
                                 <th className="col-6 col-lg-6 col-md-6 col-sm-8 col-xs-8">Mon An</th>
                                 <th className="col-2 col-lg-2 col-md-2 col-sm-1 col-xs-1">Gia</th>
@@ -81,9 +85,9 @@ export default class OrderDetail extends React.Component{
                             {this.state.orderdetail.map((product)=>
                                 <tr className="row" style={{color:"white"}} key={product.orderproductid}>
                                     <th className="col-6 col-lg-6 col-md-6 col-sm-8 col-xs-8">{product.productname}</th>
-                                    <th className="col-2 col-lg-2 col-md-2 col-sm-1 col-xs-1">{product.price}</th>
+                                    <th className="col-2 col-lg-2 col-md-2 col-sm-1 col-xs-1">{product.price+" VND"}</th>
                                     <th className="col-2 col-lg-2 col-md-2 col-sm-1 col-xs-1">{product.quantity}</th>
-                                    <th className="col-2 col-lg-2 col-md-2 col-sm-1 col-xs-1">{product.totalprice}</th>
+                                    <th className="col-2 col-lg-2 col-md-2 col-sm-1 col-xs-1">{product.totalprice + " VND"}</th>
                                 </tr>
                             )}
                         </tbody>

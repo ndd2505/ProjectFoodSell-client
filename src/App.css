@@ -55,9 +55,9 @@ span.MuiBadge-colorPrimary{
   color: darkorange
 }
 span.MuiBadge-badge{
-  top: 30px;
-  left:-15px;
-  width: 20px;
+  top: 2vw;
+  left:-1.3vw;
+  width: 1.4vw;
 }
 svg.MuiStepIcon-root.MuiStepIcon-completed{
   color: darkorange
@@ -97,4 +97,7 @@ span.MuiStepIcon-text{
 }
 input.form-control.inputsearch{
   font-size: 1.2vw
+}
+.dropdown-item:active{
+  background-color: #6f6f6f;
 }

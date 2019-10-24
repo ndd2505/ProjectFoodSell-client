@@ -32,21 +32,26 @@ const useStyles = makeStyles(theme => ({
 export default function CartPage(props) {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
+    const [total, setTotal] = React.useState(0);
     const steps = getSteps();
 
     const getStepContent=(stepIndex)=>{
         switch (stepIndex) {
           case 0:
-            return <Cart next={handleNext}/>;
+            return <Cart next={handleNext} hanldeTotal={hanldeTotal}/>;
           case 1:
-            return <UserOrderInfo next={handleNext} />;
+            return <UserOrderInfo next={handleNext} total={total}/>;
           case 2:
             return <CompleteOrder />;
           default:
             return 'Unknown stepIndex';
         }
       }
-
+    const hanldeTotal = (total) => {
+        setTotal(total)
+        return handleNext()
+    };
+      
     const handleNext = () => {
         setActiveStep(prevActiveStep => prevActiveStep + 1);
     };

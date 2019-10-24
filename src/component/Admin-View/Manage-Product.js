@@ -88,7 +88,7 @@ class ManageProduct extends React.Component {
       <div className="cardProduct">
         <div className='row card-group'>
           {this.state.rows.map(row =>
-            <div className='text-center  col-xs-12 col-sm-6 col-md-4 col-lg-4' style={{color:'darkorange', border: '1px solid darkorange'}} key={row.productid} >
+            <div className='text-center col-xs-12 col-sm-6 col-md-4 col-lg-4' style={{color:'darkorange', paddingLeft:"4vw", paddingRight:"4vw"}} key={row.productid} >
                 <img src={row.image} height='170px' className='card-img-top' alt={row.productname}/>
                 <div className='card-body' style={{height: '140px'}}>
                   <h4 className='card-title'>{row.productname}</h4>

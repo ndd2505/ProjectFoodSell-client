@@ -78,7 +78,7 @@ class CustomerManager extends React.Component {
       return (
       <div className="listTable">
         <SearchTool sortby='ID' sortid='cusid' sortname='username' sort={this.sort} onSet={this.setSearchText}/>
-        <table className='table' border='1' style={{backgroundColor: 'white', width: '80%'}} >
+        <table className='table' border='1' style={{backgroundColor: 'white'}} >
         <thead className='thead-dark' >
             <tr>
                 <th>Cus-Id</th>

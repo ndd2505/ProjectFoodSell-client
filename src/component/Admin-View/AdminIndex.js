@@ -9,6 +9,7 @@ import AddingProduct from '../Modify Data/Adding-Product';
 import UpdateProduct from '../Modify Data/Update-Product';
 import Orders from "./Orders";
 import OrderDetail from "./OrderDetail";
+import Chart from "./Chart"
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import CustomerManager from './Customer-Manager';
@@ -21,7 +22,9 @@ class AdminIndex extends React.Component {
     {linkto: "/admin/menu", linkname: "Menu"},
     {linkto: "/admin/adduser", linkname: "AddUser"},
     {linkto: "/admin/addproduct", linkname: "AddProduct"},
-    {linkto: "/admin/customer", linkname: "Customer"}
+    {linkto: "/admin/customer", linkname: "Customer"},
+    {linkto: "/admin/orders", linkname:"Orders"},
+    {linkto: "/admin/chart", linkname:"Chart"}
   ]
 
   componentDidMount(){
@@ -33,12 +36,9 @@ class AdminIndex extends React.Component {
     <Router>
       <div >
         <NavBar navitems={this.navitems}/>
-        <div className='row'>
-          <div className='col-3 col-md-2 col-lg-2 col-sm-3 col-xs-3'>
-            <h1>SideBar</h1>
-          </div>
-          <div className='col-6 col-md-8 col-ls-8 col-sm-6 col-xs-6'>
+          <div className='container' style={{width:"80%"}} shopcart={null}>
             <Switch>
+              <Route path="/admin/chart" component={Chart}></Route>
               <Route path="/admin/orderdetail/:id" component={OrderDetail}></Route>
               <Route path="/admin/orders" component={Orders}/>
               <Route path="/admin/logout" />
@@ -52,10 +52,6 @@ class AdminIndex extends React.Component {
               <Route path='/admin/customer' component={CustomerManager}/>
             </Switch>
           </div>
-          <div className='col-3 col-md-2 col-lg-2 col-sm-3 col-xs-3'>
-            <h1>Ad</h1>
-          </div>
-        </div>
       </div>
     </Router>
   );

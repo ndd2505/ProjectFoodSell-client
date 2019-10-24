@@ -1,8 +1,13 @@
 import React from "react";
+import { connect } from "react-redux"
 import ErrorIcon from '@material-ui/icons/Error';
 import tphcm from "../../../tphcm";
 
-export default class UserOrderInfo extends React.Component{
+const mapStateToProps = (state) =>{
+  return { productincart : state}
+}
+
+class UserOrderInfo extends React.Component{
   
     constructor(props){
         super(props)
@@ -69,13 +74,30 @@ export default class UserOrderInfo extends React.Component{
     }
 
     handleSubmit =(func)=>{
+      var date = new Date()
       const valid = this.validation()
       if(valid){
+        fetch("/addorderplacer", {
+          method:"post",
+          headers: {'Content-Type':'application/json'},
+          body:JSON.stringify({
+            "userid":"null",
+            "name":this.state.orderName,
+            "total":this.props.total,
+            "promotion":0,
+            "address":this.state.orderAddress+" "+this.state.orderAddressWard+" "+this.state.orderAddressDistrict,
+            "phone":this.state.orderPhone,
+            "email":this.state.orderEmail,
+            "timeorder":date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+" "+date.getHours()+"h"+date.getMinutes()+"m"+date.getSeconds()+"s",
+            "status":"Undone",
+            "product": this.props.productincart
+          })
+          
+        })
         return func()
       }
     }
     render(){
-      
     return(
         <div className="userorderinfo needs-validation" noValidate style={{position:"relative", textAlign:"center" }}>
             <div className="form-group">
@@ -143,3 +165,4 @@ export default class UserOrderInfo extends React.Component{
     )
     }
 }
+export default connect(mapStateToProps)(UserOrderInfo)

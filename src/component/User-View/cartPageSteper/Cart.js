@@ -53,7 +53,7 @@ class Cart extends React.Component{
     handleSubmit=(func)=>{
         const valid = this.validate()
         if(valid){
-            return func()
+            this.props.hanldeTotal(this.state.total)
         }
     }
 
@@ -120,7 +120,7 @@ class Cart extends React.Component{
                         <div style={{position:"relative", top:"2vw"}}>
                             <img  style={{ height:"1.5vw", position:"relative"}} src="../../../image/creditcard.png" width="40%" alt="creditcard"/>
                             <br/>
-                            <button className=" btn btn-danger" style={{fontSize:"1.2vw", width:"19vw", height:"3vw", padding:"0px", position:"relative"}} onClick={()=>{this.handleSubmit(this.props.next)}}>Thanh Toan</button>
+                            <button className=" btn btn-danger" style={{fontSize:"1.2vw", width:"19vw", height:"3vw", padding:"0px", position:"relative"}} onClick={()=>{this.handleSubmit()}}>Thanh Toan</button>
                             <div style={{textAlign: "center", color:"red", fontSize:"1.4vw"}}>
                                 {this.state.cashOutError}
                             </div>

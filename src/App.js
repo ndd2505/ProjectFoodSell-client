@@ -5,7 +5,7 @@ import AdminIndex from './component/Admin-View/AdminIndex';
 
 
 import {BrowserRouter as Router,Redirect ,Switch, Route} from 'react-router-dom';
-const adminAuth = 1
+const adminAuth = true
 const PrivateRoute = ({component: Component, ...rest }) =>(
   <Route {...rest} render={(props) =>(
     (adminAuth)
