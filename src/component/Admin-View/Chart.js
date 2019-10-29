@@ -12,17 +12,7 @@ export default class Chart extends React.Component{
         this.state = {
             datayear:[
                 61759412,
-                48104523,
-                35306067,
-                20651951,
-                60516298,
-                95072191,
-                58900421,
-                52234142,
-                82345382,
-                99281328,
-                67921451,
-                82341376
+                48104523
                 ],
             datamonth:[
                 6175941,

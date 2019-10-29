@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import './account.css';
-import {Redirect} from 'react-router-dom';
 
 class Login extends React.Component{
 
@@ -10,13 +9,36 @@ class Login extends React.Component{
     this.state={
       username: "",
       password: "",
+      errorLogin: ""
     }
   }
   
-  handlesubmit = ()=>{
-    return(
-      <Redirect to='/home' />
-    )
+  handleLogin = ()=>{
+    if(this.state.username.split("")[0] === "@"){
+      fetch('/loginadmin',{
+        method:"post",
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          "username": this.state.username,
+          "password": this.state.password
+        })
+      })
+      .then((res)=>res.json())
+      .then((row)=> localStorage.setItem("keytoken", row))
+      .then(()=> window.location.replace("http://localhost:3000/admin"))
+    }else{
+      fetch('/logincus', {
+        method:"post",
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          "username": this.state.username,
+          "password": this.state.password
+        })
+      })
+      .then((res)=>res.json())
+      .then((row)=> localStorage.setItem("keytoken", row))
+      .then(()=> window.location.replace("http://localhost:3000/home"))
+    }
   }
   hanldeInput = (e)=>{
     this.setState({[e.target.name]: e.target.value})
@@ -41,10 +63,11 @@ class Login extends React.Component{
                   <div className="input-group-prepend">
                     <span className="input-group-text">Password</span>
                   </div>
-                  <input name='password' type="password" className="form-control" placeholder="password" value={this.state.password} onChange={(e)=>{this.hanldeInput(e)}}></input>
+                  <input name='password' type="password" className="form-control" placeholder="password" value={this.state.password} onChange={(e)=>{this.hanldeInput(e)}}></input>               
               </div>
-              <div className="form-group">
-                <button value="Login" className="btn float-right login_btn">Sign In</button>
+              {(this.state.errorLogin === "") ? null : <div style={{color:"red", textAlign:"center"}}>{this.state.errorLogin}</div>}
+              <div className="form-group" style={{height:"2.5vw", margin:"0px"}}>
+                <button value="Login" onClick={this.handleLogin} className="btn float-right login_btn">Sign In</button>
               </div>
               </div>
             </div>
@@ -54,7 +77,7 @@ class Login extends React.Component{
                 <Link to='/home/signup'>Sign Up</Link>
               </div>
               <div className="d-flex justify-content-center">
-                <Link to='/home/forgot'>Forgot your password?</Link>
+                <Link to='/home/forgot'>Forgot your password ?</Link>
               </div>
           </div>
         </div>

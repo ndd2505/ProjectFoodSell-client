@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux"
 import ErrorIcon from '@material-ui/icons/Error';
 import tphcm from "../../../tphcm";
+import jwt_decode from 'jwt-decode';
 
 const mapStateToProps = (state) =>{
   return { productincart : state}
@@ -81,7 +82,7 @@ class UserOrderInfo extends React.Component{
           method:"post",
           headers: {'Content-Type':'application/json'},
           body:JSON.stringify({
-            "userid":"null",
+            "userid":(localStorage.getItem("keytoken") === null ? "null" : jwt_decode(localStorage.getItem("keytoken")).id ),
             "name":this.state.orderName,
             "total":this.props.total,
             "promotion":0,

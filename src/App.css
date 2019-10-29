@@ -101,3 +101,6 @@ input.form-control.inputsearch{
 .dropdown-item:active{
   background-color: #6f6f6f;
 }
+div Link{
+  color: black;
+}
