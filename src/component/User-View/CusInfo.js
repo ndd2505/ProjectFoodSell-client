@@ -108,7 +108,7 @@ export default class CusInfo extends React.Component {
     }
     render(){
         return(
-            <div style={{backgroundColor: 'black', textAlign:"center"}}>
+            <div style={{backgroundColor: 'black', textAlign:"center", padding:"2vw"}}>
                 <div className="form-row">
                     <div className="form-group col-12">
                     <label style={{color: 'white'}}>Họ và Tên đệm</label>

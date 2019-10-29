@@ -11,6 +11,9 @@ import CartPage from "./CartPage"
 import OrderCusView from './OrderCusView';
 import OrderDetailCus from './OrderDetailCus';
 import CusInfo from './CusInfo';
+import PasswordChange from './PasswordChange';
+import LoginChangePass from "./ChangePass/ChangePassLogin"
+
 const token = localStorage.getItem("keytoken")
 const PrivateRoute = ({component: Component, ...rest }) =>(
   <Route {...rest} render={(props) =>(
@@ -55,6 +58,7 @@ class CustomerIndex extends React.Component{
                     <div style={{textAlign:"center", backgroundColor:"darkorange"}} className="dropdown-menu" aria-labelledby="navbarDropdown">
                     <Link className="dropdown-item" to="/home/info">Account Infomation</Link>
                     <Link to="/home/orders" className="dropdown-item">Orders</Link>
+                    <Link to="/home/changepassword" className="dropdown-item">Change Password</Link>
                     <div className="dropdown-divider"></div>
                     <button className="dropdown-item" onClick={()=>this.logout()}>Log Out</button>
                     </div>
@@ -76,10 +80,12 @@ class CustomerIndex extends React.Component{
                         <Switch>
                             <Route path='/' exact component={ProductShow}/>
                             <Route path="/home" exact component={ProductShow}/>
-                            <Route path="/home/about" component={About}/> 
+                            <Route path="/home/about" component={About}/>
+                            <PrivateRoute path="/home/forgot" component={PasswordChange}/>
                             <PrivateRoute path="/home/login" component={LogIn}/>
                             <PrivateRoute path="/home/signup" component={SignUp}/>
                             <PrivateRoute path="/home/forgot" component={ForgotPass} />
+                            <PrivateRoute2 path="/home/changepassword" component={LoginChangePass} />
                             <PrivateRoute2 path="/home/orders" component={OrderCusView}/>
                             <PrivateRoute2 path="/home/orderdetail/:id" component={OrderDetailCus}/>
                             <PrivateRoute2 path="/home/info" component={CusInfo}/>

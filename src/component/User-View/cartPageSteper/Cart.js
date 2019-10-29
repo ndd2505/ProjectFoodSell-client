@@ -69,7 +69,7 @@ class Cart extends React.Component{
                                         <img height="100%" width="100%" style={{position:'absolute'}} src={cartitem.image} alt="testproductimg"/>
                                     </div>
                                     <div className="col-6 col-md-9 col-sm-8 col-xs-7" style={{border:"1px solid darkorange", borderLeft:"0px", height:"8vw", position:"relative"}}>
-                                        <Fab size="small" variant="extended" onClick={()=>{Promise.resolve(this.props.dispatch({type: "remove", cartitem})).then(()=>{this.totalcount(0,0)}).then(()=>{alert("sdsd")})}} style={{background: "red", width:"2vw", height:"2vw" ,position:"absolute", minWidth:"auto", padding:"1px", right:"-3%", top:"-8%"}}>
+                                        <Fab size="small" variant="extended" onClick={()=>{Promise.resolve(this.props.dispatch({type: "remove", cartitem})).then(()=>{this.totalcount(0,0)}).then(()=>{window.confirm("Bạn có muốn xoá sản phẩm khỏi giỏ hàng ?")})}} style={{background: "red", width:"2vw", height:"2vw" ,position:"absolute", minWidth:"auto", padding:"1px", right:"-3%", top:"-8%"}}>
                                                     <CancelIcon style={{height:"1.7vw", width:"1.7vw"}} />
                                         </Fab>
                                         <div style={{ padding:"5%"}}>

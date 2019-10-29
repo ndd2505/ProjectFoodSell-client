@@ -8,17 +8,17 @@ class SignUp extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            firstname: "",
-            lastname: "",
+            firstname: "Nguyen",
+            lastname: "Dinh",
             gender: "",
-            phone: "",
-            address: "",
-            addressDistrict:"",
-            addressWard: "",
-            email: "",
-            username: "",
-            password: "",
-            passwordconf: "",
+            phone: "0123456789",
+            address: "26 duong 1",
+            addressDistrict:"Quận 1",
+            addressWard: "Phường Tân Đinh",
+            email: "danh@gmail.com",
+            username: "danh123",
+            password: "12345678",
+            passwordconf: "12345678",
             errorfirstname: "",
             errorlastname: "",
             errorgender: "",
@@ -36,7 +36,7 @@ class SignUp extends React.Component{
     handleOnChange = (e) =>{
         this.setState({[e.target.name] : e.target.value})
     }
-    validate = () =>{
+    validate = (func) =>{
 
         let errorfirstname= ""
         let errorlastname= ""
@@ -62,7 +62,7 @@ class SignUp extends React.Component{
         if(this.state.phone === ""){
             errorphone= "Vui lòng không bỏ trống !"
         }else{
-            if(isNaN(this.state.orderPhone) ||  this.state.orderPhone.split("")[0] !== "0" || this.state.orderPhone.length !== 10){
+            if(isNaN(this.state.phone) ||  this.state.phone.split("")[0] !== "0" || this.state.phone.length !== 10){
                 errorphone= "Số điện thoại không hợp lệ !"
             }
           }
@@ -78,7 +78,7 @@ class SignUp extends React.Component{
         if(this.state.email === ""){
             erroremail= "Vui lòng không bỏ trống !"
         }else{
-            if(!this.state.orderEmail.includes("@gmail.com")){
+            if(!this.state.email.includes("@gmail.com")){
                 erroremail= "Email không hợp lệ ! Vui lòng sử dụng địa chỉ gmail"
             }
           }
@@ -105,26 +105,64 @@ class SignUp extends React.Component{
             this.setState({errorfirstname , errorlastname , errorpassword, errorpasswordconf ,errorphone , errorusername , erroraddress , erroraddressDistrict , erroraddressWard , erroremail ,errorgender})
             return false
         }else{
+            return func()
+        }
+    }
+    validServer = () =>{
+
+        var erroremail = ""
+        var errorusername =""
+        var errorphone =""
+
+        fetch('/confirmSignUpEmail/'+this.state.email)
+        .then((res)=>{if(res.status !== 200){
+            erroremail = "Email đã được sử dụng "
+            this.setState({erroremail: "Email đã được sử dụng "})
+            
+        }else{
+            this.setState({erroremail: ""})
+        }
+        })
+        fetch("/confirmSignUpUsername/"+this.state.username)
+        .then((res)=>{if(res.status !== 200){
+            errorusername = "Tên đăng nhập đã được sử dụng "
+            this.setState({errorusername: "Tên đăng nhập đã được sử dụng "})
+        }else{
+            this.setState({errorusername: ""})
+        }
+        })
+        fetch("/confirmPhone/"+this.state.phone)
+        .then((res)=>{if(res.status !== 200){
+            errorphone = "số điện thoại đã được sử dụng "
+            this.setState({errorphone: "số điện thoại đã được sử dụng "})
+            
+        }else{
+            this.setState({errorphone: ""})
+        }
+        })
+        if(erroremail || errorphone || errorusername){
+            return false
+        }else{
             return true
         }
     }
     handleSubmit = () =>{
-        if(this.validate()){
-        fetch('/add-customer', {
-            method:"post",
-            headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({
-                "firstname": this.state.firstname,
-                "lastname": this.state.lastname,
-                "gender": this.state.gender,
-                "phone": this.state.phone,
-                "address": this.state.address+" "+this.state.addressWard+" "+this.state.addressDistrict,
-                "email": this.state.email,
-                "username": this.state.username,
-                "password": this.state.password
-            })
-        })
-        }
+        console.log("success")
+        //     fetch('/add-customer', {
+        //     method:"post",
+        //     headers:{'Content-Type':'application/json'},
+        //     body: JSON.stringify({
+        //         "firstname": this.state.firstname,
+        //         "lastname": this.state.lastname,
+        //         "gender": this.state.gender,
+        //         "phone": this.state.phone,
+        //         "address": this.state.address+" "+this.state.addressWard+" "+this.state.addressDistrict,
+        //         "email": this.state.email,
+        //         "username": this.state.username,
+        //         "password": this.state.password
+        //     })
+        // })
+        
     }
 
     render(){
@@ -240,13 +278,13 @@ class SignUp extends React.Component{
                 </div>
                 <div className='form-group'>
                     <label style={{color: 'white'}}>Confirm Password</label>
-                    <input type="confpassword" className="form-control" value={this.state.passwordconf} onChange={(e)=>this.handleOnChange(e)} placeholder="Confirm Password..."></input>
+                    <input name="passwordconf" type="password" className="form-control" value={this.state.passwordconf} onChange={(e)=>this.handleOnChange(e)} placeholder="Confirm Password..."></input>
                     <div style={{textAlign:"right", color:"red", fontSize:"1.2vw"}}>
                           {(this.state.errorpasswordconf) ? <ErrorIcon /> : null}
                           {this.state.errorpasswordconf}
                     </div>
                 </div>
-                <button className='btn btn-outline-primary' onClick={this.handleSubmit}>Sign Up</button>
+                <button className='btn btn-outline-primary' onClick={()=>this.validate(this.handleSubmit)}>Sign Up</button>
             </div>
             </div>
         )
