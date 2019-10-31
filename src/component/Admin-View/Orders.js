@@ -1,21 +1,62 @@
 import React from "react";
 import {Link} from 'react-router-dom';
 import SearchTool from "../ReUseAble/SearchTool";
+import NextPrev from "../ReUseAble/NextPrev";
 
 export default class Orders extends React.Component{
 
     constructor(props){
         super(props);
         this.state={
-            orders:[]
+            orders:[],
+            sortitem: 'orderid',
+            sortdes: 'DESC',
+            searchobj: "",
         }
+        this.inputsearch= React.createRef();
     }
-
+    i = 0
     componentDidMount(){
-        fetch("/orders")
+        fetch('/orders/?orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
         .then((res)=>res.json())
         .then(rows => this.setState({orders: rows}))
     }
+    next = ()=>{
+        this.i=this.i+9
+        fetch('/orders/?search='+this.state.searchobj+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
+        .then((res) => res.json())
+        .then(rows => this.setState({orders: rows} )) 
+    }
+    prev = () =>{
+        if(this.i>0){
+            this.i=this.i-9
+            fetch('/orders/?search='+this.state.searchobj+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
+            .then((res) => res.json())
+            .then(rows => this.setState({orders: rows} )) 
+        }  
+    }
+    setSearchText=(text)=>{
+      this.setState({searchobj: text})
+      if(text===''){
+        fetch('/orders/?search='+text+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
+        .then((res) => res.json())
+        .then(rows => this.setState({orders: rows} ))  
+      }
+      else{
+      fetch('/orders/?search='+text+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
+      .then((res) => res.json())
+      .then(rows => this.setState({orders: rows} ))
+      }
+    }
+    
+    sort=(sortitem, sortdes)=>{
+      this.i = 0
+      this.setState({sortitem: sortitem, sortdes: sortdes})
+      fetch('/orders/?search='+this.state.searchobj+'&orderby='+sortitem+'&sort='+sortdes+'&offset='+parseInt(this.i)+'&max=9')
+      .then((res) => res.json())
+      .then(rows => this.setState({orders: rows}))  
+    }
+
     handleDoneBtn=(e)=>{
         const id = e.target.id
         const value = e.target.value
@@ -29,7 +70,8 @@ export default class Orders extends React.Component{
     render(){
         return(
             <div>
-                <SearchTool />
+                <SearchTool sortby='ID' sortid='orderid' sortname='total' sort={this.sort} onSet={this.setSearchText}/>
+                
                 <h1>Orders List</h1>
                 <table className="table">
                     <thead>
@@ -51,14 +93,15 @@ export default class Orders extends React.Component{
                                 <th>{order.total+" VND"}</th>
                                 <th>{(order.orderstatus==="Undone") ? "Order Processing" : (order.orderstatus==="Done") ? "Completed" : "Canceled"}</th>
                                 {(order.orderstatus === "Undone") ? <th style={{textAlign:"center"}}>
-                                <button id={order.orderid} className="btn btn-sm btn-xs btn-md btn-success" onClick={(e)=>this.handleDoneBtn(e)} value="Done">Done</button>
-                                <button id={order.orderid} className="btn btn-sm btn-xs btn-md btn-danger" onClick={(e)=>this.handleDoneBtn(e)} value="Cancel">Cancel</button>
+                                <button style={{height:"2.4vw", fontSize:"1.2vw", width:"5vw", padding:"0px"}} id={order.orderid} className="btn btn-sm btn-xs btn-md btn-success" onClick={(e)=>this.handleDoneBtn(e)} value="Done">Done</button>
+                                <button style={{height:"2.4vw", fontSize:"1.2vw", width:"5vw", padding:"0px"}} id={order.orderid} className="btn btn-sm btn-xs btn-md btn-danger" onClick={(e)=>this.handleDoneBtn(e)} value="Cancel">Cancel</button>
                                 </th>
                                 : <th></th>}
                             </tr>
                         )}
                     </tbody>
                 </table>
+                <NextPrev limit={this.state.orders.length !== 9} next={this.next} prev={this.prev} dis={this.i<=0}/>
             </div>
         )
     }

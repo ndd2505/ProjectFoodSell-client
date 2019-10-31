@@ -25,8 +25,8 @@ class SearchTool extends React.Component{
             <div className="dropdown-menu" style={{fontSize:"1.2vw"}} aria-labelledby="dropdownMenu2">
                 <button className="dropdown-item" onClick={()=>{this.props.sort(this.props.sortid,'ASC')}}>Sort by {this.props.sortby} Ascending</button>
                 <button className="dropdown-item" onClick={()=>{this.props.sort(this.props.sortid,'DESC')}}>Sort by {this.props.sortby} Descending</button>
-                <button className="dropdown-item" onClick={()=>{this.props.sort(this.props.sortname, 'ASC')}}>Sort by Name A-Z</button>
-                <button className="dropdown-item" onClick={()=>{this.props.sort(this.props.sortname, 'DESC')}}>Sort by Name Z-A</button>
+                <button className="dropdown-item" onClick={()=>{this.props.sort(this.props.sortname, 'ASC')}}>Sort by {(this.props.sortname === "total") ? "Total Ascending" : "Name A-Z"}</button>
+                <button className="dropdown-item" onClick={()=>{this.props.sort(this.props.sortname, 'DESC')}}>Sort by {(this.props.sortname === "total") ? "Total Descending" : "Name Z-A"}</button>
             </div> 
             <div className="input-group" style={{ position:"relative", fontSize:"1.2vw" ,width:"20vw"}}>
                 <div  className="input-group-prepend">

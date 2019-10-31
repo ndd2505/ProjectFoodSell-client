@@ -21,21 +21,21 @@ class ManageProduct extends React.Component {
   componentDidMount() {
     fetch('/product/?orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
     .then((res) => res.json())
-    .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))
+    .then(rows => this.setState({rows: rows} ))
   }
 
     next = ()=>{
         this.i=this.i+9
         fetch('/product/?search='+this.state.searchobj+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
         .then((res) => res.json())
-        .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows))) 
+        .then(rows => this.setState({rows: rows} )) 
     }
     prev = () =>{
         if(this.i>0){
             this.i=this.i-9
             fetch('/product/?search='+this.state.searchobj+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
             .then((res) => res.json())
-            .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows))) 
+            .then(rows => this.setState({rows: rows} )) 
         }  
     }
     setSearchText=(text)=>{
@@ -43,12 +43,12 @@ class ManageProduct extends React.Component {
       if(text===''){
         fetch('/product/?search='+text+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
         .then((res) => res.json())
-        .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))  
+        .then(rows => this.setState({rows: rows} ))  
       }
       else{
       fetch('/product/?search='+text+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=9')
       .then((res) => res.json())
-      .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))
+      .then(rows => this.setState({rows: rows} ))
       }
     }
     
@@ -57,7 +57,7 @@ class ManageProduct extends React.Component {
       this.setState({sortitem: sortitem, sortdes: sortdes})
       fetch('/product/?search='+this.state.searchobj+'&orderby='+sortitem+'&sort='+sortdes+'&offset='+parseInt(this.i)+'&max=9')
       .then((res) => res.json())
-      .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))  
+      .then(rows => this.setState({rows: rows}))  
     }
     delete=(row)=>{
         const delid = row.productid
@@ -65,7 +65,7 @@ class ManageProduct extends React.Component {
           console.log('success delete: '+ delid)
           fetch('/delete-product?id='+delid)
           .then((res) => res.json())
-          .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))  
+          .then(rows => this.setState({rows: rows} ))  
           this.i = 0
         }
     }
@@ -79,23 +79,23 @@ class ManageProduct extends React.Component {
     // searching=()=>{
     //   fetch('/search/:'+this.state.searchtext)
     //   .then((res) => res.json())
-    //   .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))
+    //   .then(rows => this.setState({rows: rows} ))
     // }
   render(){
       return (
       <div>
         <SearchTool sortby='Price' sortid='price' sortname='productname' sort={this.sort} onSet={this.setSearchText}/>
-      <div className="cardProduct">
-        <div className='row card-group'>
+        <div className="cardProduct" style={{left: "0px", position: "relative", width:"100%", marginTop:"3vw", borderBottom:"1px solid darkorange"}}>
+        <div className='row card-group' style={{ minWidth: '60px', position:"relative", width:"100%", margin:"0px"}}>
           {this.state.rows.map(row =>
-            <div className='text-center col-xs-12 col-sm-6 col-md-4 col-lg-4' style={{color:'darkorange', paddingLeft:"4vw", paddingRight:"4vw"}} key={row.productid} >
-                <img src={row.image} height='170px' className='card-img-top' alt={row.productname}/>
-                <div className='card-body' style={{height: '140px'}}>
-                  <h4 className='card-title'>{row.productname}</h4>
-                  <small className='card-text'>{row.info}</small>
+            <div id="card" className='text-center col-xs-12 col-sm-6 col-md-4 col-lg-4' style={{position:"relative", color:'darkorange'}} key={row.productid}>
+                <img style={{width:"19.9vw", height:'13.6vw'}} src={row.image} className='card-img-top' alt={row.productname}/>
+                <div className='card-body' style={{padding:"5%"}}>
+                  <p style={{minHeight:"5.25vw", maxHeight:"5.25vw" ,fontSize:"1.7vw", margin:"0px"}} className='card-title'>{row.productname}</p>
+                  <p style={{minHeight:"3.5vw", maxHeight:"3.5vw" ,fontSize:"1vw"}} className='card-text'>{row.info}</p>
                 </div>
                 <div className='card-footer'>
-                  <h5 className=' card-text'>{row.price}</h5>
+                  <p style={{fontSize:"1.7vw", margin:"0px"}} className=' card-text'>{row.price}</p>
                   <DelUpl update={'/admin/updateproduct/'+row.productid} delete={()=>{this.delete(row)}}/>
                 </div>
             </div>

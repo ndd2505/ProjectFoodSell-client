@@ -47,7 +47,7 @@ class NavBar extends React.Component {
       </Link>
       <div className="navbar-toggler" data-toggle="collapse" aria-haspopup="true" aria-expanded="false" style={{padding:"0px"}}>
       <button className="btn" type="button" data-toggle="dropdown" style={{padding:"0px"}}>
-        <span className="navbar-toggler-icon" style={{width:"3.5vw", height:"3vw"}}></span>
+        <span className="navbar-toggler-icon" style={{width:"3.5vw", height:"2vw"}}></span>
       </button>
       <div className="dropdown-menu" aria-labelledby="dropdownMenuLink" style={{left:"79vw", backgroundColor:"darkorange", fontSize:"1.5vw" }}>
           {

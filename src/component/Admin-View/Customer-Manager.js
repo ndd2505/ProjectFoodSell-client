@@ -20,21 +20,21 @@ class CustomerManager extends React.Component {
   componentDidMount() {
     fetch('/customer/?orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=6')
     .then((res) => res.json())
-    .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))
+    .then(rows => this.setState({rows: rows} ))
   }
 
     next = ()=>{
         this.i=this.i+6
         fetch('/customer/?search='+this.state.searchobj+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=6')
         .then((res) => res.json())
-        .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows))) 
+        .then(rows => this.setState({rows: rows} )) 
     }
     prev = () =>{
         if(this.i>0){
             this.i=this.i-6
             fetch('/customer/?search='+this.state.searchobj+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=6')
             .then((res) => res.json())
-            .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows))) 
+            .then(rows => this.setState({rows: rows} )) 
         }  
     }
     setSearchText=(text)=>{
@@ -42,12 +42,12 @@ class CustomerManager extends React.Component {
       if(text===''){
         fetch('/customer/?search='+text+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=6')
         .then((res) => res.json())
-        .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))  
+        .then(rows => this.setState({rows: rows} ))  
       }
       else{
       fetch('/customer/?search='+text+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=6')
       .then((res) => res.json())
-      .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))
+      .then(rows => this.setState({rows: rows} ))
       }
     }
     
@@ -56,7 +56,7 @@ class CustomerManager extends React.Component {
       this.setState({sortitem: sortitem, sortdes: sortdes})
       fetch('/customer/?search='+this.state.searchobj+'&orderby='+sortitem+'&sort='+sortdes+'&offset='+parseInt(this.i)+'&max=6')
       .then((res) => res.json())
-      .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))  
+      .then(rows => this.setState({rows: rows} ))  
     }
     delete=(row)=>{
         const delid = row.cusid
@@ -64,7 +64,7 @@ class CustomerManager extends React.Component {
           console.log('success delete: '+ delid)
           fetch('/delete-customer?id='+delid)
           .then((res) => res.json())
-          .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))  
+          .then(rows => this.setState({rows: rows} ))  
           this.i = 0
         }
     }
@@ -72,7 +72,7 @@ class CustomerManager extends React.Component {
     // searching=()=>{
     //   fetch('/search/:'+this.state.searchtext)
     //   .then((res) => res.json())
-    //   .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))
+    //   .then(rows => this.setState({rows: rows} ))
     // }
   render(){
       return (
@@ -103,7 +103,7 @@ class CustomerManager extends React.Component {
               <th>{row.email}</th>
               <th>{row.username}</th>
               <th>{row.password}</th>
-              <th><button className='btn btn-danger' onClick={()=>{this.delete(row)}}>Delete</button></th> 
+              <th><button style={{height:"2.4vw", fontSize:"1.2vw", width:"5vw", padding:"0px"}} className='btn btn-danger' onClick={()=>{this.delete(row)}}>Delete</button></th> 
             </tr>
             )}
         </tbody>   

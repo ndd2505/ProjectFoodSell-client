@@ -21,21 +21,21 @@ class ManageUser extends React.Component {
   componentDidMount() {
     fetch('/users/?orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=6')
     .then((res) => res.json())
-    .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))
+    .then(rows => this.setState({rows: rows} ))
   }
 
     next = ()=>{
         this.i=this.i+6
         fetch('/users/?search='+this.state.searchobj+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=6')
         .then((res) => res.json())
-        .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows))) 
+        .then(rows => this.setState({rows: rows} )) 
     }
     prev = () =>{
         if(this.i>0){
             this.i=this.i-6
             fetch('/users/?search='+this.state.searchobj+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=6')
             .then((res) => res.json())
-            .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows))) 
+            .then(rows => this.setState({rows: rows} )) 
         }  
     }
     setSearchText=(text)=>{
@@ -43,12 +43,12 @@ class ManageUser extends React.Component {
       if(text===''){
         fetch('/users/?search='+text+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=6')
         .then((res) => res.json())
-        .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))  
+        .then(rows => this.setState({rows: rows} ))  
       }
       else{
       fetch('/users/?search='+text+'&orderby='+this.state.sortitem+'&sort='+this.state.sortdes+'&offset='+parseInt(this.i)+'&max=6')
       .then((res) => res.json())
-      .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))
+      .then(rows => this.setState({rows: rows} ))
       }
     }
     
@@ -57,7 +57,7 @@ class ManageUser extends React.Component {
       this.setState({sortitem: sortitem, sortdes: sortdes})
       fetch('/users/?search='+this.state.searchobj+'&orderby='+sortitem+'&sort='+sortdes+'&offset='+parseInt(this.i)+'&max=6')
       .then((res) => res.json())
-      .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))  
+      .then(rows => this.setState({rows: rows} ))  
     }
     delete=(row)=>{
         const delid = row.id
@@ -65,7 +65,7 @@ class ManageUser extends React.Component {
           console.log('success delete: '+ delid)
           fetch('/delete-user?id='+delid)
           .then((res) => res.json())
-          .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))  
+          .then(rows => this.setState({rows: rows}))  
           this.i = 0
         }
     }
@@ -79,13 +79,13 @@ class ManageUser extends React.Component {
     // searching=()=>{
     //   fetch('/search/:'+this.state.searchtext)
     //   .then((res) => res.json())
-    //   .then(rows => this.setState({rows: rows}, () => console.log('Customers fetched...', rows)))
+    //   .then(rows => this.setState({rows: rows} ))
     // }
   render(){
       return (
       <div className="listTable">
         <SearchTool sortby='ID' sortid='id' sortname='username' sort={this.sort} onSet={this.setSearchText}/>
-        <table className='table' border='1' style={{backgroundColor: 'white'}} >
+        <table className='table' border='1' style={{backgroundColor: 'white', width:"76vw", height:"30vw", fontSize:"1.2vw"}} >
         <thead className='thead-dark' >
             <tr>
                 <th>Id</th>
@@ -93,6 +93,7 @@ class ManageUser extends React.Component {
                 <th>Password</th>
                 <th>HoTen</th>
                 <th>Email</th>
+                <th>Role</th>
                 <th>Update</th>
             </tr>
         </thead>
@@ -104,6 +105,7 @@ class ManageUser extends React.Component {
               <th>{row.password}</th>
               <th>{row.hoten}</th>
               <th>{row.email}</th>
+              <th>{row.role}</th>
               <th><DelUpl update={'/admin/updateuser/'+row.id} delete={()=>{this.delete(row)}}/></th>
             </tr>
             )}

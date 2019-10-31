@@ -23,9 +23,9 @@ class Login extends React.Component{
           "password": this.state.password
         })
       })
-      .then((res)=>res.json())
-      .then((row)=> localStorage.setItem("keytoken", row))
-      .then(()=> window.location.replace("http://localhost:3000/admin"))
+      .then((res)=>{if(res.status === 400){ this.setState({errorLogin: "Tên đăng nhập hoặc mật khẩu không chính xác"}) }else{ this.setState({errorLogin: ""})} return res.json()})
+      .then((row)=> {if(this.state.errorLogin === ""){localStorage.setItem("keytoken", row)}})
+      .then(()=> {if(this.state.errorLogin === ""){window.location.replace("http://localhost:3000/admin")}})
     }else{
       fetch('/logincus', {
         method:"post",
@@ -35,9 +35,9 @@ class Login extends React.Component{
           "password": this.state.password
         })
       })
-      .then((res)=>res.json())
-      .then((row)=> localStorage.setItem("keytoken", row))
-      .then(()=> window.location.replace("http://localhost:3000/home"))
+      .then((res)=>{if(res.status === 400){this.setState({errorLogin: "Tên đăng nhập hoặc mật khẩu không chính xác"})}else{this.setState({errorLogin: ""})}return res.json()})
+      .then((row)=> {if(this.state.errorLogin === ""){localStorage.setItem("keytoken", row)}})
+      .then(()=> {if(this.state.errorLogin === ""){window.location.replace("http://localhost:3000/home")}})
     }
   }
   hanldeInput = (e)=>{
@@ -46,12 +46,11 @@ class Login extends React.Component{
 
   render(){
     return(
-      <div className='container'>
-		      <div className="card"></div>
+      <div className="card" >
             <div className='card-header'>
               <h1>Sign In</h1>
             </div>
-            <div className='card-body' >
+            <div className='card-body' style={{padding:"0px"}}>
               <div style={{backgroundColor: 'black'}}>
                 <div className="input-group form-group">
                   <div className="input-group-prepend">
@@ -67,7 +66,7 @@ class Login extends React.Component{
               </div>
               {(this.state.errorLogin === "") ? null : <div style={{color:"red", textAlign:"center"}}>{this.state.errorLogin}</div>}
               <div className="form-group" style={{height:"2.5vw", margin:"0px"}}>
-                <button value="Login" onClick={this.handleLogin} className="btn float-right login_btn">Sign In</button>
+                <button value="Login" onClick={this.handleLogin} className="btn float-right" style={{color:"black", backgroundColor:"darkorange"}}>Sign In</button>
               </div>
               </div>
             </div>

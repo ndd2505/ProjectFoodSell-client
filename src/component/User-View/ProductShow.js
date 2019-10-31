@@ -71,7 +71,7 @@ class ProductShow extends React.Component {
         return(
             <div className='viewproduct'>
         <SearchTool sortby='Price' sortid='price' sortname='productname' sort={this.sort} onSet={this.setSearchText}/>
-      <div className="cardProduct" style={{left: "0px", position: "relative", width:"100%", top: "40px", borderBottom:"1px solid darkorange"}}>
+      <div className="cardProduct" style={{left: "0px", position: "relative", width:"100%", marginTop:"3vw", borderBottom:"1px solid darkorange"}}>
         <div className='row card-group' style={{ minWidth: '60px', position:"relative", width:"100%", margin:"0px"}}>
           {this.state.rows.map(row =>
             <div id="card" className='text-center col-xs-12 col-sm-6 col-md-4 col-lg-4' style={{position:"relative", color:'darkorange'}} key={row.productid}>

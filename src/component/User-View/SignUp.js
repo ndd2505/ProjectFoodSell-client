@@ -8,17 +8,17 @@ class SignUp extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            firstname: "Nguyen",
-            lastname: "Dinh",
+            firstname: "",
+            lastname: "",
             gender: "",
-            phone: "0123456789",
-            address: "26 duong 1",
-            addressDistrict:"Quận 1",
-            addressWard: "Phường Tân Đinh",
-            email: "danh@gmail.com",
-            username: "danh123",
-            password: "12345678",
-            passwordconf: "12345678",
+            phone: "",
+            address: "",
+            addressDistrict:"",
+            addressWard: "",
+            email: "",
+            username: "",
+            password: "",
+            passwordconf: "",
             errorfirstname: "",
             errorlastname: "",
             errorgender: "",
@@ -110,58 +110,37 @@ class SignUp extends React.Component{
     }
     validServer = () =>{
 
-        var erroremail = ""
-        var errorusername =""
-        var errorphone =""
-
-        fetch('/confirmSignUpEmail/'+this.state.email)
-        .then((res)=>{if(res.status !== 200){
-            erroremail = "Email đã được sử dụng "
-            this.setState({erroremail: "Email đã được sử dụng "})
-            
-        }else{
-            this.setState({erroremail: ""})
-        }
-        })
-        fetch("/confirmSignUpUsername/"+this.state.username)
-        .then((res)=>{if(res.status !== 200){
-            errorusername = "Tên đăng nhập đã được sử dụng "
-            this.setState({errorusername: "Tên đăng nhập đã được sử dụng "})
-        }else{
-            this.setState({errorusername: ""})
-        }
-        })
-        fetch("/confirmPhone/"+this.state.phone)
-        .then((res)=>{if(res.status !== 200){
-            errorphone = "số điện thoại đã được sử dụng "
-            this.setState({errorphone: "số điện thoại đã được sử dụng "})
-            
-        }else{
-            this.setState({errorphone: ""})
-        }
-        })
-        if(erroremail || errorphone || errorusername){
-            return false
-        }else{
-            return true
-        }
+        fetch("/validsignup",{
+            method:"post",
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({
+                "email": this.state.email,
+                "username": this.state.username,
+                "phone": this.state.phone
+            })
+        }).then((res)=>res.json())
+        // .then((error)=>console.log(error))
+        .then((error)=> this.setState({erroremail: error.email, errorphone: error.phone, errorusername: error.username}))   
+        .then(()=>{
+            if(this.state.erroremail || this.state.errorphone || this.state.errorusername){
+                console.log("failed")
+            }else{return this.handleSubmit()}})
     }
     handleSubmit = () =>{
-        console.log("success")
-        //     fetch('/add-customer', {
-        //     method:"post",
-        //     headers:{'Content-Type':'application/json'},
-        //     body: JSON.stringify({
-        //         "firstname": this.state.firstname,
-        //         "lastname": this.state.lastname,
-        //         "gender": this.state.gender,
-        //         "phone": this.state.phone,
-        //         "address": this.state.address+" "+this.state.addressWard+" "+this.state.addressDistrict,
-        //         "email": this.state.email,
-        //         "username": this.state.username,
-        //         "password": this.state.password
-        //     })
-        // })
+            fetch('/add-customer', {
+            method:"post",
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({
+                "firstname": this.state.firstname,
+                "lastname": this.state.lastname,
+                "gender": this.state.gender,
+                "phone": this.state.phone,
+                "address": this.state.address+" "+this.state.addressWard+" "+this.state.addressDistrict,
+                "email": this.state.email,
+                "username": this.state.username,
+                "password": this.state.password
+            })
+        })
         
     }
 
@@ -192,7 +171,7 @@ class SignUp extends React.Component{
                 <div className="form-row">
                     <div className="form-group col-3">
                         <label style={{color: 'white'}}>Giới Tính</label>
-                        <select name='gender' value={this.state.gender} onChange={(e)=>this.handleOnChange(e)} className="form-control">
+                        <select name='gender' style={{marginRight: "0px", width:"10vw"}} value={this.state.gender} onChange={(e)=>this.handleOnChange(e)} className="form-control">
                             <option></option>
                             <option value='Male' defaultValue>Nam</option>
                             <option value='Female' >Nữ</option>
@@ -202,7 +181,7 @@ class SignUp extends React.Component{
                           {this.state.errorgender}
                         </div>
                     </div>
-                    <div className='col-3'>
+                    <div className="col-3">
 
                     </div>
                     <div className='form-group col-6'>
@@ -224,9 +203,9 @@ class SignUp extends React.Component{
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col">
+                    <div className="col form-group">
                         <p style={{textAlign:"left", color:"white"}}>Quận</p>
-                        <select name="addressDistrict" className="form-control" style={{padding:"0px"}} value={this.state.addressDistrict} onChange={(e)=>this.handleOnChange(e)}>
+                        <select name="addressDistrict" className="form-control" style={{padding:"0px", marginRight:"0px", width:"100%"}} value={this.state.addressDistrict} onChange={(e)=>this.handleOnChange(e)}>
                             <option></option>
                             {tphcm.map((district, index) => 
                                 <option key={index}>{district.name}</option>
@@ -237,9 +216,9 @@ class SignUp extends React.Component{
                           {this.state.erroraddressDistrict}
                         </div>
                     </div>
-                    <div className="col">
+                    <div className="col form-group">
                         <p style={{textAlign:"left", color:"white"}}>Phường</p>
-                        <select name="addressWard" className="form-control" style={{padding:"0px"}} value={this.state.addressWard} onChange={(e)=>this.handleOnChange(e)}>
+                        <select name="addressWard" className="form-control" style={{padding:"0px", marginRight:'0px', width:"100%"}} value={this.state.addressWard} onChange={(e)=>this.handleOnChange(e)}>
                             <option></option>
                             {
                             (this.state.addressDistrict === "") ? null 
@@ -284,7 +263,7 @@ class SignUp extends React.Component{
                           {this.state.errorpasswordconf}
                     </div>
                 </div>
-                <button className='btn btn-outline-primary' onClick={()=>this.validate(this.handleSubmit)}>Sign Up</button>
+                <button className='btn btn-outline-primary' onClick={()=>this.validate(this.validServer)}>Sign Up</button>
             </div>
             </div>
         )

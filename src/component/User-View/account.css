@@ -1,22 +1,23 @@
 .SignUp{
     text-align: center;
-    margin: 15px;
-    padding: 25px;
+    padding: 5vw;
 }
 .container{
     align-content: center;
     width: 60%;
 }
+div.form-group{
+    margin-bottom: 2vw;
+}
 .card{
     margin: 15px;
-    width: 400px;
     background-color: rgba(0,0,0,0.5);
 }
 .card-body{
     background-color: black;
 }
 .input-group-prepend span{
-    width: 100px;
+    width: 8vw;
     background-color: darkorange;
     color: black;
     border:0 !important;
