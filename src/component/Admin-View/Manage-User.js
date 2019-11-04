@@ -85,7 +85,7 @@ class ManageUser extends React.Component {
       return (
       <div className="listTable">
         <SearchTool sortby='ID' sortid='id' sortname='username' sort={this.sort} onSet={this.setSearchText}/>
-        <table className='table' border='1' style={{backgroundColor: 'white', width:"76vw", height:"30vw", fontSize:"1.2vw"}} >
+        <table className='table' border='1' style={{backgroundColor: 'white', width:"76vw", fontSize:"1.2vw"}} >
         <thead className='thead-dark' >
             <tr>
                 <th>Id</th>
@@ -106,7 +106,8 @@ class ManageUser extends React.Component {
               <th>{row.hoten}</th>
               <th>{row.email}</th>
               <th>{row.role}</th>
-              <th><DelUpl update={'/admin/updateuser/'+row.id} delete={()=>{this.delete(row)}}/></th>
+              {(row.id === 1) ? null
+              : <th><DelUpl update={'/admin/updateuser/'+row.id} delete={()=>{this.delete(row)}}/></th>}
             </tr>
             )}
         </tbody>   

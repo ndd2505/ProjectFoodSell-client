@@ -68,6 +68,8 @@ class SignUp extends React.Component{
           }
         if(this.state.address === ""){
             erroraddress= "Vui lòng không bỏ trống !"
+        }else{
+            if(this.state.address.length > 20){erroraddress = "Địa chỉ vượt quá kí tự cho phép !"}
         }
         if(this.state.addressWard === ""){
             erroraddressWard= "Vui lòng chọn phường/xã !"
@@ -141,6 +143,7 @@ class SignUp extends React.Component{
                 "password": this.state.password
             })
         })
+        .then(()=>window.location.replace("http://localhost:3000/home/login"))
         
     }
 

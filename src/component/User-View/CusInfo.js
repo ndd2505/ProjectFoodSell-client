@@ -2,7 +2,7 @@ import React from "react";
 import jwt_decode from "jwt-decode"
 import ErrorIcon from '@material-ui/icons/Error';
 
-const token = localStorage.getItem("keytoken")
+const token = sessionStorage.getItem("keytoken")
 export default class CusInfo extends React.Component {
 
     constructor(props){
@@ -122,7 +122,7 @@ export default class CusInfo extends React.Component {
                 <div className="form-row">
                     <div className="form-group col-3">
                         <label style={{color: 'white'}}>Giới Tính</label>
-                        <select name='gender' value={this.state.gender} onChange={(e)=>this.handleOnChange(e)} className="form-control">
+                        <select style={{margin:"0px"}} name='gender' value={this.state.gender} onChange={(e)=>this.handleOnChange(e)} className="form-control">
                             <option></option>
                             <option value='Male' defaultValue>Nam</option>
                             <option value='Female' >Nữ</option>
@@ -170,7 +170,7 @@ export default class CusInfo extends React.Component {
                     </div>
                 </div>
                 <button className="btn btn-outline-danger" onClick={()=>window.location.replace("http://localhost:3000/home/")}>Cancel</button>
-                <button className='btn btn-outline-primary' onClick={this.handleSubmit}>Update Info</button>
+                <button className='btn btn-outline-primary' onClick={this.handleSubmit}>Update</button>
             </div>
         )
     }

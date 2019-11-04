@@ -82,7 +82,7 @@ class UserOrderInfo extends React.Component{
           method:"post",
           headers: {'Content-Type':'application/json'},
           body:JSON.stringify({
-            "userid":(localStorage.getItem("keytoken") === null ? "null" : jwt_decode(localStorage.getItem("keytoken")).id ),
+            "userid":(sessionStorage.getItem("keytoken") === null ? "null" : jwt_decode(sessionStorage.getItem("keytoken")).id ),
             "name":this.state.orderName,
             "total":this.props.total,
             "promotion":0,

@@ -2,7 +2,7 @@ import React from "react";
 import jwt_decode from "jwt-decode";
 import {Link} from "react-router-dom";
 
-const token = localStorage.getItem("keytoken")
+const token = sessionStorage.getItem("keytoken")
 
 export default class OrderCusView extends React.Component {
 

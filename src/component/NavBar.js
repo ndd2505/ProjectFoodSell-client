@@ -11,21 +11,21 @@ const mapStateToProps = (state) =>{
   return { productincart : state}
 }
 
-const token = localStorage.getItem("keytoken")
+const token = sessionStorage.getItem("keytoken")
 class NavBar extends React.Component {
   navliststyle = {
     color: 'black',
   }
 
   logout = () =>{
-    localStorage.clear()
+    sessionStorage.clear()
     window.location.replace("http://localhost:3000/home/login")
   }
 
   navitemcus = [
     {linkto: "/home", linkname: "Home"},
     {linkto: "/home/about", linkname: "About"},
-    {linkto: "/home/account", linkname: "Account"},
+    {linkto: "/home/info", linkname: "Account"},
     {linkto: "/home/orders", linkname: "Orders"}
   ]
 
@@ -77,7 +77,7 @@ class NavBar extends React.Component {
           </Link>
         : null  
         }
-        {(localStorage.getItem("keytoken") !== null) ? <button className="btn dropdown-item" style={{fontSize:"1.5vw"}} onClick={()=>this.logout()}>logout</button> : null}
+        {(sessionStorage.getItem("keytoken") !== null) ? <button className="dropdown-item" style={{fontSize:"1.5vw"}} onClick={()=>this.logout()}>logout</button> : null}
       </div>
       </div>
       <div className="collapse navbar-collapse" id="navbarNav" style={{width:"100%"}}>

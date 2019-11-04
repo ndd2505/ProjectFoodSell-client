@@ -24,7 +24,7 @@ class Login extends React.Component{
         })
       })
       .then((res)=>{if(res.status === 400){ this.setState({errorLogin: "Tên đăng nhập hoặc mật khẩu không chính xác"}) }else{ this.setState({errorLogin: ""})} return res.json()})
-      .then((row)=> {if(this.state.errorLogin === ""){localStorage.setItem("keytoken", row)}})
+      .then((row)=> {if(this.state.errorLogin === ""){sessionStorage.setItem("keytoken", row)}})
       .then(()=> {if(this.state.errorLogin === ""){window.location.replace("http://localhost:3000/admin")}})
     }else{
       fetch('/logincus', {
@@ -36,7 +36,7 @@ class Login extends React.Component{
         })
       })
       .then((res)=>{if(res.status === 400){this.setState({errorLogin: "Tên đăng nhập hoặc mật khẩu không chính xác"})}else{this.setState({errorLogin: ""})}return res.json()})
-      .then((row)=> {if(this.state.errorLogin === ""){localStorage.setItem("keytoken", row)}})
+      .then((row)=> {if(this.state.errorLogin === ""){sessionStorage.setItem("keytoken", row)}})
       .then(()=> {if(this.state.errorLogin === ""){window.location.replace("http://localhost:3000/home")}})
     }
   }

@@ -6,7 +6,6 @@ import ProductShow from '../User-View/ProductShow';
 import About from '../About';
 import LogIn from './Login';
 import SignUp from './SignUp';
-import ForgotPass from './forgotpass';
 import CartPage from "./CartPage"
 import OrderCusView from './OrderCusView';
 import OrderDetailCus from './OrderDetailCus';
@@ -14,7 +13,7 @@ import CusInfo from './CusInfo';
 import PasswordChange from './PasswordChange';
 import LoginChangePass from "./ChangePass/ChangePassLogin"
 
-const token = localStorage.getItem("keytoken")
+const token = sessionStorage.getItem("keytoken")
 const PrivateRoute = ({component: Component, ...rest }) =>(
   <Route {...rest} render={(props) =>(
     token === null
@@ -44,7 +43,7 @@ class CustomerIndex extends React.Component{
     ]
 
     logout= () =>{
-        localStorage.clear()
+        sessionStorage.clear()
         window.location.replace("http://localhost:3000/home/login")
     }
 
@@ -84,7 +83,6 @@ class CustomerIndex extends React.Component{
                             <PrivateRoute path="/home/forgot" component={PasswordChange}/>
                             <PrivateRoute path="/home/login" component={LogIn}/>
                             <PrivateRoute path="/home/signup" component={SignUp}/>
-                            <PrivateRoute path="/home/forgot" component={ForgotPass} />
                             <PrivateRoute2 path="/home/changepassword" component={LoginChangePass} />
                             <PrivateRoute2 path="/home/orders" component={OrderCusView}/>
                             <PrivateRoute2 path="/home/orderdetail/:id" component={OrderDetailCus}/>

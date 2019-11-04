@@ -56,10 +56,6 @@ export default function CartPage(props) {
         setActiveStep(prevActiveStep => prevActiveStep + 1);
     };
 
-    const handleBack = () => {
-        setActiveStep(prevActiveStep => prevActiveStep - 1);
-    };
-
     const handleReset = () => {
         setActiveStep(0);
     };
@@ -82,8 +78,7 @@ export default function CartPage(props) {
           ) : (
             <div  style={{marginLeft: "150px", marginRight:"150px"}}>
               <Typography className={classes.instructions}></Typography>
-              <div>
-                <Button
+                {/* <Button
                   disabled={activeStep !== 1}
                   onClick={handleBack}
                   className={classes.backButton}
@@ -91,8 +86,7 @@ export default function CartPage(props) {
                   color ="secondary"
                 >
                   Back
-                </Button>
-              </div>
+                </Button> */}
             </div>
           )}
         </div>

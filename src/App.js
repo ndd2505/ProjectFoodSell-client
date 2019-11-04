@@ -6,7 +6,7 @@ import jwt_decode from 'jwt-decode';
 
 
 import {BrowserRouter as Router,Redirect ,Switch, Route} from 'react-router-dom';
-const adminAuth = localStorage.getItem("keytoken")
+const adminAuth = sessionStorage.getItem("keytoken")
 const PrivateRoute = ({component: Component, ...rest }) =>(
   <Route {...rest} render={(props) =>(
     (adminAuth !== null)
@@ -36,7 +36,7 @@ class App extends React.Component {
         <PublicRoute path="/home" component={CustomerIndex}/>
         <PrivateRoute path="/admin" component={AdminIndex}/>
       </Switch>
-      <div className="footer" >
+      <div className="footer">
         <div className="row" style={{height:"10vw"}}>
           <div className="col-md-6 col-6" style={{padding:"2vw"}}>
             <p style={{margin:"0px", textAlign:"center"}}>1999-2019 © FoodWeb. All rights reserved</p>

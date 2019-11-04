@@ -83,7 +83,7 @@ export default class Chart extends React.Component{
             <div style={{backgroundColor:"white", marginTop:"2vw"}}>
                 <Line
                     
-                    height= {400}
+                    height= "400"
                     data={dayChart(this.state.dataday)}
                     options={{
                         title:{
@@ -96,10 +96,10 @@ export default class Chart extends React.Component{
                 />
             </div>
             <div className="row" style={{width:"100%", margin:"0px", marginTop:"5vw"}}>
-                    <Paper className="col-5" style={{backgroundColor:"white"}}>
+                    <Paper className="col-5" style={{backgroundColor:"white" , height:'50vw'}}>
                         <Bar
                             type="horizontalBar"
-                            height={400}
+                            height= "400"
                             data={monthChart(this.state.datamonth)}
                             options={{
                                 title:{
@@ -114,9 +114,9 @@ export default class Chart extends React.Component{
                     <div className="col-2">
 
                     </div>
-                    <Paper className="col-5" style={{backgroundColor:"white"}}>
+                    <Paper className="col-5" style={{backgroundColor:"white", height:'50vw'}}>
                         <Pie
-                            height = {400}
+                            height = "400"
                             data={yearChart(this.state.datayear)}
                             options={{
                                 title:{

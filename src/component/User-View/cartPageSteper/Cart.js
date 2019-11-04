@@ -60,10 +60,10 @@ class Cart extends React.Component{
     render(){
     return(
             <div className=" bodycartpage">
-                <div className="row" style={{paddingTop: "40px", paddingBottom:"20px", position:"relative", left:"0px", minHeight: "500px" }}>
+                <div className="row" style={{paddingTop: "5vw", paddingBottom:"20px", position:"relative", left:"0px", minHeight: "50vw" }}>
                     <div className="col-6 col-md-8 col-sm-7 col-xs-6" style={{top:"-14px", padding:"0px"}} >
                             {this.props.productincart.map(cartitem => 
-                            <div key={cartitem.productid} className="card" style={{ width: "95%", margin:"0px", marginBottom:"3%"}}>
+                            <div key={cartitem.productid} className="card" style={{ width: "95%", margin:"0px", marginBottom:"3%", padding:"1vw"}}>
                                 <div className="row no-gutters">
                                     <div className="col-6 col-md-3 col-sm-4 col-xs-5">
                                         <img height="100%" width="100%" style={{position:'absolute'}} src={cartitem.image} alt="testproductimg"/>
@@ -82,11 +82,11 @@ class Cart extends React.Component{
                                             <div className="col-6 col-sm-6 col-md-6 col-xs-6 col-lg-6" style={{padding:"0px"}}>
                                                 <div className="input-group"  style={{float:"right", width:"5vw"}}>
                                                             <div className="input-group-prepend"  style={{height:"2vw", width:"1.5vw"}}>
-                                                            <button style={{width:"1.5vw", padding:"0px", fontSize:"1vw"}} className="btn btn-outline-primary btn-sm" disabled={cartitem.quantity===1} onClick={()=>{this.props.dispatch({type:"-quantity", cartitem}); this.totalcount(0,0)}}>-</button>
+                                                            <button style={{width:"1.5vw", padding:"0px", fontSize:"1vw", height:"2vw"}} className="btn btn-outline-primary btn-sm" disabled={cartitem.quantity===1} onClick={()=>{this.props.dispatch({type:"-quantity", cartitem}); this.totalcount(0,0)}}>-</button>
                                                             </div>
                                                             <input className="form-control-sm" type="text" disabled style={{width:"2vw",height:"2vw", fontSize:"1vw", padding:"0px",border:"0px", borderRadius:"0px",fontFamily: "sans-serif" ,textAlign:"center"}} value={cartitem.quantity}></input>
                                                             <div className="input-group-append"  style={{height:"2vw", width:"1.5vw"}} >
-                                                            <button style={{width:"1.5vw", padding:"0px", fontSize:"1vw"}} className="btn btn-outline-primary btn-sm"disabled={cartitem.quantity===20} onClick={()=>{this.props.dispatch({type:"add", cartitem}); this.totalcount(0,0)}}>+</button>
+                                                            <button style={{width:"1.5vw", padding:"0px", fontSize:"1vw", height:"2vw"}} className="btn btn-outline-primary btn-sm"disabled={cartitem.quantity===20} onClick={()=>{this.props.dispatch({type:"add", cartitem}); this.totalcount(0,0)}}>+</button>
                                                             </div>
                                                 </div>            
                                             </div>
@@ -98,7 +98,7 @@ class Cart extends React.Component{
                             )}
                     </div>
                     <div className="col-6 col-sm-5 col-xs-6 col-md-4" style={{padding:"0px", paddingLeft:"1vw",borderLeft: "1px solid darkorange", position:"sticky", maxHeight:"500px", top:"10px"}}>
-                        <div className="card" style={{margin: "0px",position:"unset",background:"transparent",fontFamily:"monospace",left:"-20px" ,maxWidth: "100%",color:"darkorange", maxHeight:"400px", minHeight:"100px"}}>
+                        <div className="card" style={{margin: "0px",position:"unset",background:"transparent",fontFamily:"monospace",left:"-20px" ,maxWidth: "100%",color:"darkorange", maxHeight:"400px", minHeight:"100px", padding:"0px"}}>
                             <div className=" cardheader" style={{textAlign: "center", fontSize: "2.6vw",height:"4vw"}}>Total</div>
                             <table className=" cardbody table table-sm table-borderless" style={{ top:"80px",color:"darkorange" ,fontSize:"1.3vw"}}>
                                 <tbody>

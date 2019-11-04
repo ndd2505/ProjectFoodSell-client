@@ -16,7 +16,7 @@ import jwt_decode from 'jwt-decode';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import CustomerManager from './Customer-Manager';
 
-const token = localStorage.getItem("keytoken")
+const token = sessionStorage.getItem("keytoken")
 const PrivateRoute = ({component: Component, ...rest }) =>(
   <Route {...rest} render={(props) =>(
     jwt_decode(token).author === "superadmin"
@@ -40,7 +40,7 @@ class AdminIndex extends React.Component {
 
   account = () =>{
     const logout = () =>{
-      localStorage.clear();
+      sessionStorage.clear();
       window.location.replace("http://localhost:3000/home/login")
     }
     return(

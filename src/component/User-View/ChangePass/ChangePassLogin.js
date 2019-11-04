@@ -13,7 +13,7 @@ export default function LoginChangePass(props){
     const [confNewPassError, setConfNewPassError] = React.useState("")
     const [status, setStatus] = React.useState(false)
 
-    const id = jwt_decode(localStorage.getItem("keytoken")).id
+    const id = jwt_decode(sessionStorage.getItem("keytoken")).id
 
     function Submit(){
             fetch('/confirmpassword', {

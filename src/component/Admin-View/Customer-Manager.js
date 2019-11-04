@@ -88,7 +88,6 @@ class CustomerManager extends React.Component {
                 <th>Address</th>
                 <th>Email</th>
                 <th>UserName</th>
-                <th>Password</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -102,7 +101,6 @@ class CustomerManager extends React.Component {
               <th>{row.address}</th>
               <th>{row.email}</th>
               <th>{row.username}</th>
-              <th>{row.password}</th>
               <th><button style={{height:"2.4vw", fontSize:"1.2vw", width:"5vw", padding:"0px"}} className='btn btn-danger' onClick={()=>{this.delete(row)}}>Delete</button></th> 
             </tr>
             )}
