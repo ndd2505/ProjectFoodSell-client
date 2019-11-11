@@ -13,7 +13,7 @@ export default function ConpleteOrder(){
         Đơn hàng sẽ được giao đến bạn trong 45' sau khi xác nhận đơn hàng.</p>       
         <p style={{fontSize:"1.8vw",}}><strong style={{fontSize:"2.3vw",color:"white"}}>Xin hãy giữ liên lạc ! <PhoneCallbackIcon style={{fill:"#ff0115", fontSize:"3vw"}} /></strong><br/>
         Nhân viên chúng tôi sẽ liên hệ với bạn để xác nhận đơn hàng trong ít phút.</p>
-        <Link to="/home"><button className="btn btn-outline-danger" style={{textAlign:"center"}}>Quay Trở lại Trang Chủ ></button></Link>
+        <Link to="/home"><button className="btn btn-outline-danger" style={{textAlign:"center", width:"20vw"}}>Quay Trở lại Trang Chủ ></button></Link>
         </div>
     )
 }

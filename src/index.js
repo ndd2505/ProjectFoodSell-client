@@ -28,6 +28,9 @@ const setcart = (state=[], action) =>{
                 return arr
         case "remove":
             return state.filter((item) => item.productid !== action.cartitem.productid)
+        case "clear":
+            let clearArr = []
+            return clearArr
         default: return state
     }
 }

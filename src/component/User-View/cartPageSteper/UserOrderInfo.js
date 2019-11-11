@@ -95,6 +95,8 @@ class UserOrderInfo extends React.Component{
           })
           
         })
+        .then(()=>this.props.dispatch({type:"clear"}))
+
         return func()
       }
     }
@@ -134,7 +136,7 @@ class UserOrderInfo extends React.Component{
                 </div>
                 <br/>
                 <div className="row">
-                    <div className="col">
+                    <div className="col-6">
                         <select name="orderAddressDistrict" className="form-control" style={{padding:"0px"}} value={this.state.orderAddressDistrict} onChange={(e)=>this.hanldeInput(e)}>
                             <option></option>
                             {tphcm.map((district, index) => 
@@ -146,7 +148,7 @@ class UserOrderInfo extends React.Component{
                           {this.state.orderAddressDistrictError}
                         </div>
                     </div>
-                    <div className="col">
+                    <div className="col-6">
                         <select name="orderAddressWard" className="form-control" style={{padding:"0px"}} value={this.state.orderAddressWard} onChange={(e)=>this.hanldeInput(e)}>
                             <option></option>
                             {
@@ -161,7 +163,7 @@ class UserOrderInfo extends React.Component{
                     </div>
                 </div>
             </div>
-            <button className="btn btn-primary"  onClick={()=>{this.handleSubmit(this.props.next)}}>Xác Nhận</button>
+            <button className="btn btn-primary" style={{width:"7vw"}} onClick={()=>{this.handleSubmit(this.props.next)}}>Xác Nhận</button>
         </div>
     )
     }

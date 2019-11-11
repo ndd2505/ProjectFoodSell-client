@@ -165,9 +165,10 @@ h1{
 }
 
 .footer{
+  color: white;
   position: relative;
   margin-top: 2vw;
-  background-color: white;
+  background-color: #353535;
   padding-left: 5vw;
   padding-right: 5vw;
 }

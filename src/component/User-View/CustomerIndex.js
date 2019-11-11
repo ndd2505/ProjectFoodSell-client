@@ -95,7 +95,32 @@ class CustomerIndex extends React.Component{
                     </div>
                 </div>
             </div>
-            </Router>
+            
+            <div className="footer">
+            <div className="row" style={{height:"10vw", }}>
+              <div className="col-md-6 col-6" style={{padding:"2vw"}}>
+                <p style={{margin:"0px", textAlign:"left"}}>1999-2019 © FoodWeb. All rights reserved</p>
+                <p style={{margin:"0px", textAlign:"left"}}>Công ty TNHH FoodWeb</p>
+                <p style={{margin:"0px", textAlign:"left"}}>xx Đường xx, Phường xx, Quận xx, TP.Hồ Chí Minh</p>
+              </div>
+              <div className="col-md-3 col-3" style={{padding:"2vw", fontSize:"1.2vw"}}>
+                <a style={{color:"white"}} href="http://localhost:3000/home/about">About Us</a>
+                <br/>
+                <a style={{color:"white"}} href="https://vnexpress.net/">Read Some News</a>
+                <br/>
+                <a style={{color:"white"}} href="https://edition.cnn.com/travel/article/world-best-foods-readers-choice/index.html">Some Best Restaurant</a>
+              </div>
+              <div className="col-md-3 col-3" style={{padding:"2vw", fontSize:"1.2vw"}}>
+                Payment:
+                <br/>
+                <img src="../../image/newcash.png" style={{width:"4vw", height:"3vw", verticalAlign:"0px"}} alt="cashpaylogo"/>
+                <img src="../../image/visa.jpg" style={{width:"4vw", height:"3vw", verticalAlign:"0px"}} alt="visapaylogo"/>
+                <img src="../../image/paypal.jpg" style={{width:"4vw", height:"3vw", verticalAlign:"0px"}} alt="masterpaylogo"/>
+                <img src="../../image/master.jpg" style={{width:"4vw", height:"3vw", verticalAlign:"0px"}} alt="paypallogo"/>
+              </div>
+            </div>
+          </div>
+          </Router>
         )
     }
 }

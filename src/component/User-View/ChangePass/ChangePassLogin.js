@@ -96,7 +96,7 @@ export default function LoginChangePass(props){
         : <div style={{textAlign:"center", padding:"3vw", margin:"0px"}}>
         <h1 style={{color:"green", fontSize:"2vw"}}>Đổi Mật khẩu thành công <CheckCircleOutlineIcon /></h1>
         <br/>
-        <button className="btn btn-outline-danger" onClick={()=>window.location.replace("http://localhost:3000/home")}>Quay Trở lại trang đăng nhập</button>
+        <button className="btn btn-outline-danger" style={{width:"20vw"}} onClick={()=>window.location.replace("http://localhost:3000/home")}>Quay Trở lại trang đăng nhập</button>
           </div>
     )
 }
