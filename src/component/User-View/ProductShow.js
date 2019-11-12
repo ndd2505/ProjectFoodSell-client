@@ -81,7 +81,14 @@ class ProductShow extends React.Component {
                   <p style={{minHeight:"3.5vw", maxHeight:"3.5vw" ,fontSize:"1vw"}} className='card-text'>{row.info}</p>
                 </div>
                 <div className='card-footer' style={{padding:"5%"}}>
-                  <p style={{fontSize:"1.7vw", margin:"0px"}} className=' card-text'>{row.price}</p>
+                {(row.promotionprice !== row.price) 
+                  ? <p style={{fontSize:"1.7vw", margin:"0px", textDecoration:"line-through"}} className=' card-text'>{row.price} <span className="badge badge-danger">-{100-row.promotionprice*100/row.price}%</span></p>
+                  : <p style={{fontSize:"1.7vw", margin:"0px"}} className=' card-text'>{row.price}</p>
+                }
+                {(row.promotionprice !== row.price) 
+                ? <p style={{fontSize:"1.7vw", margin:"0px"}} className=' card-text'>{row.promotionprice}</p> 
+                : <p style={{fontSize:"1.7vw", margin:"0px", visibility:"hidden"}} className=' card-text'>{row.promotionprice}</p> 
+                }
                   <button className='btn btn-warning' style={{width:'18vw', height:"2.7vw", fontSize:"1.1vw"}} onClick={()=>this.props.dispatch(addtocart(row))}>Buy</button>
                 </div>
             </div>

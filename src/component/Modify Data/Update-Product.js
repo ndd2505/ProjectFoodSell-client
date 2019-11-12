@@ -13,9 +13,11 @@ class UpdateProduct extends React.Component{
             price: "",
             info: "",
             type: "",
+            promotionprice : "",
             productnameError: "",
             imageError: "",
             priceError: "",
+            promotionpriceError:"",
             infoError: "",
             typeError: "",
         }
@@ -26,7 +28,7 @@ class UpdateProduct extends React.Component{
     componentDidMount(){
         fetch('/update-product/'+this.updateid)
         .then((res) => res.json())
-        .then((row) => this.setState({productname: row[0].productname, image: row[0].image, price: row[0].price, info: row[0].info, type: row[0].type}))
+        .then((row) => this.setState({productname: row[0].productname, image: row[0].image, price: row[0].price, info: row[0].info, type: row[0].type, promotionprice: 100-row[0].promotionprice/row[0].price*100}))
     }
 
     handleInput = (e) =>{
@@ -39,6 +41,7 @@ class UpdateProduct extends React.Component{
         let priceError = ""
         let infoError = ""
         let typeError = ""
+        let promotionpriceError = ""
 
         if(this.state.productname === ""){
             productnameError = "Vui lòng nhập tên sản phẩm"
@@ -53,6 +56,12 @@ class UpdateProduct extends React.Component{
                 priceError = "Mức giá không hợp lệ. Vui lòng nhập số"
             }
         }
+        if(isNaN(this.state.promotionprice)){
+            promotionpriceError = "Xin hãy nhập số phần trăm giảm giá hợp lệ"
+        }
+        if(this.state.promotionprice > 100){
+            promotionpriceError = "Số phần trăm giảm giá vượt quá 100%"
+        }
         if(this.state.info === ""){
             infoError = "Vui lòng nhập thông tin miêu tả"
         }
@@ -60,8 +69,8 @@ class UpdateProduct extends React.Component{
             typeError = "Vui lòng chọn loại sản phẩm"
         }
 
-        if( productnameError || imageError || priceError || infoError || typeError){
-            this.setState({productnameError, imageError, priceError, infoError , typeError})
+        if( productnameError || imageError || priceError || promotionpriceError || infoError || typeError){
+            this.setState({productnameError, imageError, priceError,promotionpriceError ,infoError , typeError})
             return false
         }else{
             return func()
@@ -78,7 +87,8 @@ class UpdateProduct extends React.Component{
                 "image": this.state.image,
                 "price": this.state.price,
                 "info": this.state.info,
-                "type": this.state.type
+                "type": this.state.type,
+                "promotionprice": this.state.price-this.state.price/100*this.state.promotionprice
             })
         })
         .then((res) => {if(res.status === 200){window.location.replace("http://localhost:3000/admin/product")}})
@@ -87,7 +97,7 @@ class UpdateProduct extends React.Component{
     render(){
         return(
             <div style={{textAlign:"center"}} >
-                <h1>Adding Product</h1>
+                <h1>Update Product</h1>
                 <div className='form-group'>
                     <label>ProductName</label>
                     <input name='productname' className="form-control" type='text' placeholder='Product Name...' value={this.state.productname} onChange={(e)=>this.handleInput(e)}></input>
@@ -105,27 +115,45 @@ class UpdateProduct extends React.Component{
                     </div>
                 </div>
                 <div className='form-group'>
-                    <label>ProductType</label>
-                    <select name="type" className="form-control" value={this.state.type} onChange={(e)=>this.handleInput(e)} >
-                        <option></option>
-                        <option>Cơm</option>
-                        <option>Mì</option>
-                        <option>Bún</option>
-                        <option>Hải Sản</option>
-                        <option>Tráng Miệng</option>
-                        <option>Món Thêm</option>
-                    </select>
-                    <div style={{textAlign:"left", color:"red", fontSize:"1.2vw"}}>
-                          {(this.state.typeError) ? <ErrorIcon /> : null}
-                          {this.state.typeError}
-                    </div>
-                </div>
-                <div className='form-group'>
-                    <label>ProductPrice</label>
-                    <input name='price' className="form-control" type='text' placeholder='Price...' value={this.state.price} onChange={(e)=>this.handleInput(e)}></input>
-                    <div style={{textAlign:"left", color:"red", fontSize:"1.2vw"}}>
-                          {(this.state.priceError) ? <ErrorIcon /> : null}
-                          {this.state.priceError}
+                    <div className="row">
+                        <div className="col-xs-4 col-4 col-md-4 col-lg-4">
+                            <label>ProductPrice</label>
+                            <input name='price' className="form-control" type='text' placeholder='Price...' value={this.state.price} onChange={(e)=>this.handleInput(e)}></input>
+                            <div style={{textAlign:"left", color:"red", fontSize:"1.2vw"}}>
+                                {(this.state.priceError) ? <ErrorIcon /> : null}
+                                {this.state.priceError}
+                            </div>
+                        </div>
+                        <div className="col-xs-4 col-4 col-md-4 col-lg-4">
+                            <label>Promotion</label>
+                            <div class="input-group mb-3">
+                            <input name="promotionprice" className="form-control" type="text" placeholder="Promotion..." value={this.state.promotionprice} onChange={(e)=>this.handleInput(e)}></input>
+                            <div class="input-group-append" >
+                                <span class="input-group-text" style={(this.state.promotionprice === 0) ? {backgroundColor:"white"} : {backgroundColor:"red", color:"white"}} id="basic-addon2">%</span>
+                            </div>
+                            <div style={{textAlign:"left", color:"red", fontSize:"1.2vw"}}>
+                                {(this.state.promotionpriceError) ? <ErrorIcon /> : null}
+                                {this.state.promotionpriceError}
+                            </div>
+                            </div>
+                        </div>
+                        <div className="col-xs-4 col-4 col-md-4 col-lg-4">
+                            <label>ProductType</label>
+                            <br/>
+                            <select name="type" className="form-control" value={this.state.type} onChange={(e)=>this.handleInput(e)} >
+                                <option></option>
+                                <option>Cơm</option>
+                                <option>Mì</option>
+                                <option>Bún</option>
+                                <option>Hải Sản</option>
+                                <option>Tráng Miệng</option>
+                                <option>Món Thêm</option>
+                            </select>
+                            <div style={{textAlign:"left", color:"red", fontSize:"1.2vw"}}>
+                                {(this.state.typeError) ? <ErrorIcon /> : null}
+                                {this.state.typeError}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className='form-group'>
@@ -138,8 +166,8 @@ class UpdateProduct extends React.Component{
                 </div>
                 
                 <div className='form-group'>
-                    <Link to='/admin/menu'><button className='btn btn-danger' >Cancel</button></Link>
-                    <button className='btn btn-primary' onClick={()=>this.validClient(this.handleSubmit)}>Add</button>
+                    <Link to='/admin/product'><button className='btn btn-danger' >Cancel</button></Link>
+                    <button className='btn btn-primary' onClick={()=>this.validClient(this.handleSubmit)}>Update</button>
                 </div>
             </div>
         )

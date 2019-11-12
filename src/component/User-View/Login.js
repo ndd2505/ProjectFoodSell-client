@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import './account.css';
+import ErrorIcon from '@material-ui/icons/Error';
 
 class Login extends React.Component{
 
@@ -10,9 +11,16 @@ class Login extends React.Component{
       username: "",
       password: "",
       errorLogin: ""
+      
     }
   }
-  
+  valid = (func) =>{
+    if(this.state.username.includes(" ")){
+      this.setState({errorLogin: "Tên đăng nhập sai định dạng"})
+    }else{
+    return func()
+    }
+  }
   handleLogin = ()=>{
     if(this.state.username.split("")[0] === "@"){
       fetch('/loginadmin',{
@@ -57,16 +65,18 @@ class Login extends React.Component{
                     <span className="input-group-text">UserName</span>
                   </div>
                   <input name='username' type="text" className="form-control" placeholder="username" value={this.state.username} onChange={(e)=>{this.hanldeInput(e)}}></input>	
+                  
                 </div>
+                
                 <div className="input-group form-group">
                   <div className="input-group-prepend">
                     <span className="input-group-text">Password</span>
                   </div>
                   <input name='password' type="password" className="form-control" placeholder="password" value={this.state.password} onChange={(e)=>{this.hanldeInput(e)}}></input>               
               </div>
-              {(this.state.errorLogin === "") ? null : <div style={{color:"red", textAlign:"center"}}>{this.state.errorLogin}</div>}
+              {(this.state.errorLogin === "") ? null : <div style={{color:"red", textAlign:"center",fontSize:"1.2vw"}}>{this.state.errorLogin}</div>}
               <div className="form-group" style={{height:"2.5vw", margin:"0px"}}>
-                <button value="Login" onClick={this.handleLogin} className="btn float-right" style={{color:"black", backgroundColor:"darkorange"}}>Sign In</button>
+                <button value="Login" onClick={()=>this.valid(this.handleLogin)} className="btn float-right" style={{color:"black", backgroundColor:"darkorange"}}>Sign In</button>
               </div>
               </div>
             </div>

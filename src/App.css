@@ -175,3 +175,8 @@ h1{
 .table th{
   padding: 0.8vw
 }
+
+svg.MuiSvgIcon-root{
+  width: 1.2vw;
+  height: 1.2vw;
+}

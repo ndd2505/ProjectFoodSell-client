@@ -94,8 +94,15 @@ class ManageProduct extends React.Component {
                   <p style={{minHeight:"5.25vw", maxHeight:"5.25vw" ,fontSize:"1.7vw", margin:"0px"}} className='card-title'>{row.productname}</p>
                   <p style={{minHeight:"3.5vw", maxHeight:"3.5vw" ,fontSize:"1vw"}} className='card-text'>{row.info}</p>
                 </div>
-                <div className='card-footer'>
-                  <p style={{fontSize:"1.7vw", margin:"0px"}} className=' card-text'>{row.price}</p>
+                <div className='card-footer' >
+                {(row.promotionprice !== row.price) 
+                  ? <p style={{fontSize:"1.7vw", margin:"0px", textDecoration:"line-through"}} className=' card-text'>{row.price} <span className="badge badge-danger">-{100-row.promotionprice*100/row.price}%</span></p>
+                  : <p style={{fontSize:"1.7vw", margin:"0px"}} className=' card-text'>{row.price}</p>
+                }
+                {(row.promotionprice !== row.price) 
+                ? <p style={{fontSize:"1.7vw", margin:"0px"}} className=' card-text'>{row.promotionprice}</p> 
+                : <p style={{fontSize:"1.7vw", margin:"0px", visibility:"hidden"}} className=' card-text'>{row.promotionprice}</p> 
+                }
                   <DelUpl update={'/admin/updateproduct/'+row.productid} delete={()=>{this.delete(row)}}/>
                 </div>
             </div>

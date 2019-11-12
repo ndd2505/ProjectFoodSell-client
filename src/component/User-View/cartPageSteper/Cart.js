@@ -24,7 +24,7 @@ class Cart extends React.Component{
     
     totalcount = (total,i)=>{
         if(i<this.props.productincart.length){
-            const sumtotal = total + (this.props.productincart[i].price*this.props.productincart[i].quantity)
+            const sumtotal = total + (this.props.productincart[i].promotionprice*this.props.productincart[i].quantity)
                 const i2 = i+1
                 this.totalcount(sumtotal, i2)
         }else{
@@ -78,7 +78,7 @@ class Cart extends React.Component{
                                             <p className="col-6 col-sm-6 col-md-6 col-xs-6 col-lg-6" style={{textAlign:"right",margin:"0px", padding:"0px" , fontSize:"1.2vw", position:"relative"}}>Số Lượng</p>
                                         </div>
                                         <div  className="row" style={{position:"relative", margin:"1%"}}>
-                                            <p className="col-6 col-sm-6 col-md-6 col-xs-6 col-lg-6" style={{textAlign:"left",margin:"0px", padding:"0px" ,color:"darkorange" ,fontSize:"1.2vw", position:"relative"}}>{cartitem.price}</p>
+                                            <p className="col-6 col-sm-6 col-md-6 col-xs-6 col-lg-6" style={{textAlign:"left",margin:"0px", padding:"0px" ,color:"darkorange" ,fontSize:"1.2vw", position:"relative"}}>{cartitem.promotionprice}</p>
                                             <div className="col-6 col-sm-6 col-md-6 col-xs-6 col-lg-6" style={{padding:"0px"}}>
                                                 <div className="input-group"  style={{float:"right", width:"5vw"}}>
                                                             <div className="input-group-prepend"  style={{height:"2vw", width:"1.5vw"}}>
