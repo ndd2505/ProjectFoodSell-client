@@ -2,19 +2,86 @@ import React from "react";
 import { connect } from "react-redux"
 import CancelIcon from '@material-ui/icons/Cancel';
 import { Fab } from "@material-ui/core";
-
+import clsx from 'clsx';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import ErrorIcon from '@material-ui/icons/Error';
+import InfoIcon from '@material-ui/icons/Info';
+import CloseIcon from '@material-ui/icons/Close';
+import { amber, green } from '@material-ui/core/colors';
+import IconButton from '@material-ui/core/IconButton';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import WarningIcon from '@material-ui/icons/Warning';
+import { makeStyles } from '@material-ui/core/styles';
+const variantIcon = {
+    success: CheckCircleIcon,
+    warning: WarningIcon,
+    error: ErrorIcon,
+    info: InfoIcon,
+  };
+  
 const mapStateToProps = (state) =>{
     return { productincart : state}
 }
 
-
+const useStyles1 = makeStyles(theme => ({
+    success: {
+      backgroundColor: green[600],
+    },
+    error: {
+      backgroundColor: theme.palette.error.dark,
+    },
+    info: {
+      backgroundColor: theme.palette.primary.main,
+    },
+    warning: {
+      backgroundColor: amber[700],
+    },
+    icon: {
+      fontSize: 20,
+    },
+    iconVariant: {
+      opacity: 0.9,
+      marginRight: theme.spacing(1),
+    },
+    message: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+  }));
+  function MySnackbarContentWrapper(props) {
+    const classes = useStyles1();
+    const { className, message, onClose, variant, ...other } = props;
+    const Icon = variantIcon[variant];
+  
+    return (
+      <SnackbarContent
+        className={clsx(classes[variant], className)}
+        aria-describedby="client-snackbar"
+        message={
+          <span id="client-snackbar" className={classes.message}>
+            <Icon className={clsx(classes.icon, classes.iconVariant)} />
+            {message}
+          </span>
+        }
+        action={[
+          <IconButton key="close" aria-label="close" color="inherit" onClick={onClose}>
+            <CloseIcon className={classes.icon} />
+          </IconButton>,
+        ]}
+        {...other}
+      />
+      )
+    }
+  
 
 class Cart extends React.Component{
     constructor(props){
         super(props);
         this.state ={
             total: 0,
-            cashOutError: ""
+            cashOutError: "",
+            open: false
         }
     }
     
@@ -57,6 +124,14 @@ class Cart extends React.Component{
         }
     }
 
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        this.setState({open: false});
+      };
+
     render(){
     return(
             <div className=" bodycartpage">
@@ -69,7 +144,7 @@ class Cart extends React.Component{
                                         <img height="100%" width="100%" style={{position:'absolute'}} src={cartitem.image} alt="testproductimg"/>
                                     </div>
                                     <div className="col-6 col-md-9 col-sm-8 col-xs-7" style={{border:"1px solid darkorange", borderLeft:"0px", height:"8vw", position:"relative"}}>
-                                        <Fab size="small" variant="extended" onClick={()=>{Promise.resolve(this.props.dispatch({type: "remove", cartitem})).then(()=>{this.totalcount(0,0)}).then(()=>{window.confirm("Bạn có muốn xoá sản phẩm khỏi giỏ hàng ?")})}} style={{background: "red", width:"2vw", height:"2vw" ,position:"absolute", minWidth:"auto", padding:"1px", right:"-3%", top:"-8%"}}>
+                                        <Fab size="small" variant="extended" onClick={()=>{Promise.resolve(this.props.dispatch({type: "remove", cartitem})).then(()=>{this.totalcount(0,0)}).then(()=>{window.confirm("Bạn có muốn xoá sản phẩm khỏi giỏ hàng ?")}).then(()=>this.setState({open: true}))}} style={{background: "red", width:"2vw", height:"2vw" ,position:"absolute", minWidth:"auto", padding:"1px", right:"-3%", top:"-8%"}}>
                                                     <CancelIcon style={{height:"1.7vw", width:"1.7vw"}} />
                                         </Fab>
                                         <div style={{ padding:"5%"}}>
@@ -127,6 +202,22 @@ class Cart extends React.Component{
                         </div>
                     </div>
                 </div>
+                <Snackbar
+                    anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                    }}
+                    open={this.state.open}
+                    autoHideDuration={6000}
+                    onClose={this.handleClose}
+                >
+                    <MySnackbarContentWrapper
+                    style={{background:"red", padding:"1vw"}}
+                    onClose={this.handleClose}
+                    variant="error"
+                    message="Xoá Sản Phẩm Khỏi Giỏ Hàng Thành Công"
+                    />
+                </Snackbar>
             </div>
     )
     }

@@ -51,6 +51,11 @@ class Login extends React.Component{
   hanldeInput = (e)=>{
     this.setState({[e.target.name]: e.target.value})
   }
+  entering = (e) =>{
+    if(e.keyCode == 13){
+      return this.valid(this.handleLogin)
+    }
+  }
 
   render(){
     return(
@@ -72,7 +77,7 @@ class Login extends React.Component{
                   <div className="input-group-prepend">
                     <span className="input-group-text">Password</span>
                   </div>
-                  <input name='password' type="password" className="form-control" placeholder="password" value={this.state.password} onChange={(e)=>{this.hanldeInput(e)}}></input>               
+                  <input name='password' type="password" className="form-control" placeholder="password" value={this.state.password} onChange={(e)=>{this.hanldeInput(e)}} onKeyDown={(e) => {this.entering(e)}}></input>               
               </div>
               {(this.state.errorLogin === "") ? null : <div style={{color:"red", textAlign:"center",fontSize:"1.2vw"}}>{this.state.errorLogin}</div>}
               <div className="form-group" style={{height:"2.5vw", margin:"0px"}}>

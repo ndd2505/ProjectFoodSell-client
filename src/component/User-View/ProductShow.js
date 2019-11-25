@@ -3,6 +3,24 @@ import SearchTool from '../ReUseAble/SearchTool';
 import NextPrev from '../ReUseAble/NextPrev';
 import './view.css';
 import { connect } from "react-redux"
+import clsx from 'clsx';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import ErrorIcon from '@material-ui/icons/Error';
+import InfoIcon from '@material-ui/icons/Info';
+import CloseIcon from '@material-ui/icons/Close';
+import { amber, green } from '@material-ui/core/colors';
+import IconButton from '@material-ui/core/IconButton';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import WarningIcon from '@material-ui/icons/Warning';
+import { makeStyles } from '@material-ui/core/styles';
+
+const variantIcon = {
+  success: CheckCircleIcon,
+  warning: WarningIcon,
+  error: ErrorIcon,
+  info: InfoIcon,
+};
 
 const addtocart = (cartitem)=>{
   return{
@@ -10,6 +28,55 @@ const addtocart = (cartitem)=>{
       cartitem
   }
 }
+const useStyles1 = makeStyles(theme => ({
+  success: {
+    backgroundColor: green[600],
+  },
+  error: {
+    backgroundColor: theme.palette.error.dark,
+  },
+  info: {
+    backgroundColor: theme.palette.primary.main,
+  },
+  warning: {
+    backgroundColor: amber[700],
+  },
+  icon: {
+    fontSize: 20,
+  },
+  iconVariant: {
+    opacity: 0.9,
+    marginRight: theme.spacing(1),
+  },
+  message: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+}));
+function MySnackbarContentWrapper(props) {
+  const classes = useStyles1();
+  const { className, message, onClose, variant, ...other } = props;
+  const Icon = variantIcon[variant];
+
+  return (
+    <SnackbarContent
+      className={clsx(classes[variant], className)}
+      aria-describedby="client-snackbar"
+      message={
+        <span id="client-snackbar" className={classes.message}>
+          <Icon className={clsx(classes.icon, classes.iconVariant)} />
+          {message}
+        </span>
+      }
+      action={[
+        <IconButton key="close" aria-label="close" color="inherit" onClick={onClose}>
+          <CloseIcon className={classes.icon} />
+        </IconButton>,
+      ]}
+      {...other}
+    />
+    )
+  }
 
 class ProductShow extends React.Component {
 
@@ -21,6 +88,7 @@ class ProductShow extends React.Component {
           sortdes: 'ASC',
           searchobj: '',
           limititem: null,
+          open: false
         }
         this.inputsearch= React.createRef();
       }
@@ -67,6 +135,14 @@ class ProductShow extends React.Component {
           .then(rows => this.setState({rows: rows}))  
         }
 
+        handleClose = (event, reason) => {
+          if (reason === 'clickaway') {
+            return;
+          }
+      
+          this.setState({open: false});
+        };
+
     render(){
         return(
             <div className='viewproduct'>
@@ -82,19 +158,36 @@ class ProductShow extends React.Component {
                 </div>
                 <div className='card-footer' style={{padding:"5%"}}>
                 {(row.promotionprice !== row.price) 
-                  ? <p style={{fontSize:"1.7vw", margin:"0px", textDecoration:"line-through"}} className=' card-text'>{row.price} <span className="badge badge-danger">-{100-row.promotionprice*100/row.price}%</span></p>
-                  : <p style={{fontSize:"1.7vw", margin:"0px"}} className=' card-text'>{row.price}</p>
+                  ? <p style={{fontSize:"1.7vw", margin:"0px", textDecoration:"line-through"}} className=' card-text'>{row.price} VND<span className="badge badge-danger">-{100-row.promotionprice*100/row.price}%</span></p>
+                  : <p style={{fontSize:"1.7vw", margin:"0px"}} className=' card-text'>{row.price} VND</p>
                 }
                 {(row.promotionprice !== row.price) 
-                ? <p style={{fontSize:"1.7vw", margin:"0px"}} className=' card-text'>{row.promotionprice}</p> 
-                : <p style={{fontSize:"1.7vw", margin:"0px", visibility:"hidden"}} className=' card-text'>{row.promotionprice}</p> 
+                ? <p style={{fontSize:"1.7vw", margin:"0px"}} className=' card-text'>{row.promotionprice} VND</p> 
+                : <p style={{fontSize:"1.7vw", margin:"0px", visibility:"hidden"}} className=' card-text'>{row.promotionprice} VND</p> 
                 }
-                  <button className='btn btn-warning' style={{width:'18vw', height:"2.7vw", fontSize:"1.1vw"}} onClick={()=>this.props.dispatch(addtocart(row))}>Buy</button>
+                  <button className='btn btn-warning' style={{width:'18vw', height:"2.7vw", fontSize:"1.1vw"}} onClick={()=>{this.setState({open: true}); return this.props.dispatch(addtocart(row))}}>Buy</button>
                 </div>
             </div>
             )}
         </div>  
       </div> 
+          <Snackbar
+            
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            open={this.state.open}
+            autoHideDuration={6000}
+            onClose={this.handleClose}
+          >
+            <MySnackbarContentWrapper
+            style={{background:"green", padding:"1vw"}}
+              onClose={this.handleClose}
+              variant="success"
+              message="Thêm giỏ hàng thành công"
+            />
+          </Snackbar>
           <NextPrev limit={this.state.rows.length  !== 9} next={this.next} prev={this.prev} dis={this.i<=0}/>
       </div>
         )
