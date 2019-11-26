@@ -33,7 +33,7 @@ export default class OrderDetailCus extends React.Component{
                     : <span className="badge badge-danger">Canceled</span>    
                     }
                     <br/>
-                    Thoi Gian Dat Hang: <span className="badge-secondary">{this.state.orderplacer.timeorder} </span>
+                    Thoi Gian Dat Hang: <span className="badge-secondary">{this.state.orderplacer.timesmat} </span>
                     <br/>
                 </div>
                 <div className="row card-deck" style={{textAlign:"left",margin:"0px", color:"white", borderBottom:"1px solid darkorange"}}>

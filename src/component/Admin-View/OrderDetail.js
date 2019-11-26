@@ -1,5 +1,5 @@
 import React from "react";
-
+let perPro = []
 export default class OrderDetail extends React.Component{
 
     constructor(props){
@@ -12,17 +12,34 @@ export default class OrderDetail extends React.Component{
 
     orderid = this.props.match.params.id
 
+
     componentDidMount(){
         fetch("/orderdetail/"+this.props.match.params.id+"")
         .then((res)=>res.json())
         .then(rows => this.setState({orderdetail: rows}))
+        .then(()=>this.state.orderdetail.map((product) => perPro.push(product.price)))
 
         fetch("/orderplacerdetail/"+this.props.match.params.id+"")
         .then((res)=>res.json())
         .then(rows => this.setState({orderplacer: rows[0]}))
+
+        
+        
+    }
+
+    countTotal = () => {
+        let total = 0
+        let i = 0
+        while (i < perPro.length){
+            total = total+ perPro[i]
+            i++
+        }
+        return total
     }
 
     render(){
+        
+        
         return(
             <div style={{fontSize:"0.8vw"}}>
                 <div  style={{textAlign:"left", color:"white",fontSize:"2vw", marginBottom:"1.5vw",paddingBottom:"1.5vw" ,marginTop:"1.5vw" ,borderBottom:"1px solid darkorange"}}>
@@ -33,7 +50,7 @@ export default class OrderDetail extends React.Component{
                     : <span className="badge badge-danger">Canceled</span>    
                     }
                     <br/>
-                    Thoi Gian Dat Hang: <span className="badge-secondary">{this.state.orderplacer.timeorder} </span>
+                    Thoi Gian Dat Hang: <span className="badge-secondary">{this.state.orderplacer.timesmat} </span>
                     <br/>
                 </div>
                 <div className="row card-deck" style={{textAlign:"left",margin:"0px", color:"white", borderBottom:"1px solid darkorange"}}>
@@ -63,11 +80,11 @@ export default class OrderDetail extends React.Component{
                         </div>
                         
                         <div className="card-body"  style={{color:"darkorange", padding:"0.9vw"}}>
-                            Tong Tien(Truoc Giam Gia): {this.state.orderplacer.total + " VND"}
+                            Tong Tien(Truoc Giam Gia): {this.countTotal() + " VND"}
                             <br/>
-                            Giam Gia: {this.state.orderplacer.promotion +" VND"}
+                            Giam Gia: {this.countTotal()-this.state.orderplacer.total +" VND"}
                             <br/>
-                            Tong Tien(Phai Thanh Toan): {this.state.orderplacer.total - this.state.orderplacer.promotion +" VND"}
+                            Tong Tien(Phai Thanh Toan): {this.state.orderplacer.total+" VND"}
                         </div>
                     </div>
                 </div>

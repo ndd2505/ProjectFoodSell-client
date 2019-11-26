@@ -37,7 +37,7 @@ export default class OrderCusView extends React.Component {
                             <tr key={order.orderid} style={{textAlign:"left",fontSize:"1.2vw", color:(order.orderstatus === "Done") ? "green" : (order.orderstatus === "Cancel") ? "red" : "yellow"}}>
                                 <th><Link style={{color:"currentColor"}} to={"/home/orderdetail/"+order.orderid}>{order.orderid}</Link></th>
                                 <th>{order.name}</th>
-                                <th>{order.timeorder}</th>
+                                <th>{order.timesmat}</th>
                                 <th>{order.total+" VND"}</th>
                                 <th>{(order.orderstatus==="Undone") ? "Order Processing" : (order.orderstatus==="Done") ? "Completed" : "Canceled"}</th>
                             </tr>

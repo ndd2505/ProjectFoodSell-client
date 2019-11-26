@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import './account.css';
-import ErrorIcon from '@material-ui/icons/Error';
 
 class Login extends React.Component{
 
@@ -52,7 +51,7 @@ class Login extends React.Component{
     this.setState({[e.target.name]: e.target.value})
   }
   entering = (e) =>{
-    if(e.keyCode == 13){
+    if(e.keyCode === 13){
       return this.valid(this.handleLogin)
     }
   }

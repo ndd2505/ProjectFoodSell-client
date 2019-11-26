@@ -126,10 +126,10 @@ class UpdateProduct extends React.Component{
                         </div>
                         <div className="col-xs-4 col-4 col-md-4 col-lg-4">
                             <label>Promotion</label>
-                            <div class="input-group mb-3">
+                            <div className="input-group mb-3">
                             <input name="promotionprice" className="form-control" type="text" placeholder="Promotion..." value={this.state.promotionprice} onChange={(e)=>this.handleInput(e)}></input>
-                            <div class="input-group-append" >
-                                <span class="input-group-text" style={(this.state.promotionprice === 0) ? {backgroundColor:"white"} : {backgroundColor:"red", color:"white"}} id="basic-addon2">%</span>
+                            <div className="input-group-append" >
+                                <span className="input-group-text" style={(this.state.promotionprice === 0) ? {backgroundColor:"white"} : {backgroundColor:"red", color:"white"}} id="basic-addon2">%</span>
                             </div>
                             <div style={{textAlign:"left", color:"red", fontSize:"1.2vw"}}>
                                 {(this.state.promotionpriceError) ? <ErrorIcon /> : null}
