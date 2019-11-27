@@ -46,7 +46,7 @@ export default class OrderDetailCus extends React.Component{
                             <br/>
                             Dia Chi: {this.state.orderplacer.address}
                             <br/>
-                            So Dien thoai: {this.state.orderplacer.phone}
+                            So Dien thoai: (+84){this.state.orderplacer.phone}
                         </div>
                     </div>
                     <div className="card col-4 col-md-4 col-xs-4 col-sm-4 col-lg-4" style={{padding:"0px", border:"0px", backgroundColor:"darkorange", margin:"1vw"}}>

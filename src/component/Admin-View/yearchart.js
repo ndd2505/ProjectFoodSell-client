@@ -1,5 +1,5 @@
 const yearChart=(data) => {return {
-    labels: ["Sáng", "Tối"],
+    labels: ["0-12h", "12h-24h"],
     datasets:[
       {
         label:'Tổng Doanh Thu',

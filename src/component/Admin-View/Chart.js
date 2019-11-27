@@ -46,11 +46,11 @@ export default class Chart extends React.Component{
                 7921451,
                 8231376,
                 ],
-                dataday:[
+                dataoveryear:[
                     112343,
                     101200,
                     101230,
-                    500000,
+                    200000,
                     104560,
                     134500,
                     166000,
@@ -59,18 +59,7 @@ export default class Chart extends React.Component{
                     190000,
                     113400,
                     146400,
-                    126120,
-                    107886,
-                    195600,
-                    114000,
-                    940000,
-                    119000,
-                    900000,
-                    634500,
-                    112300,
-                    198000,
-                    141000,
-                    160000,
+                    202938
                     ],
                 
         }
@@ -83,7 +72,7 @@ export default class Chart extends React.Component{
             <div style={{backgroundColor:"white", marginTop:"2vw"}}>
                 <Line
                     height= {400}
-                    data={dayChart(this.state.dataday)}
+                    data={dayChart(this.state.datamonth)}
                     options={{
                         title:{
                             display: true,
@@ -99,7 +88,7 @@ export default class Chart extends React.Component{
                         <Bar
                             type="horizontalBar"
                             height= {400}
-                            data={monthChart(this.state.datamonth)}
+                            data={monthChart(this.state.dataoveryear)}
                             options={{
                                 title:{
                                     display: true,

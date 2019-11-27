@@ -8,7 +8,8 @@ export default function ConfirmUsername(props){
     const nextFunc = () =>{
         fetch("/confirmUsername/"+username)
         .then((res)=>{ if(res.status === 200){
-            return props.next(username)
+            fetch("/confirmcode")
+            .then(() => props.next(username))
         }
         else{
             if(username === "")

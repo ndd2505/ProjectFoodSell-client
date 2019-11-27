@@ -89,7 +89,7 @@ class UserOrderInfo extends React.Component{
             "address":this.state.orderAddress+" "+this.state.orderAddressWard+" "+this.state.orderAddressDistrict,
             "phone":this.state.orderPhone,
             "email":this.state.orderEmail,
-            "timeorder":date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds(),
+            "timeorder":date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds(),
             "status":"Undone",
             "product": this.props.productincart
           })
