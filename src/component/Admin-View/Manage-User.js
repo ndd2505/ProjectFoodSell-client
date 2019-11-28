@@ -90,7 +90,7 @@ class ManageUser extends React.Component {
             <tr>
                 <th>Id</th>
                 <th>UserName</th>
-                <th>Password</th>
+                
                 <th>HoTen</th>
                 <th>Email</th>
                 <th>Role</th>
@@ -102,7 +102,7 @@ class ManageUser extends React.Component {
             <tr key={row.id} border='1'>
               <th>{row.id}</th>
               <th>{row.username}</th>
-              <th>{row.password}</th>
+              
               <th>{row.hoten}</th>
               <th>{row.email}</th>
               <th>{row.role}</th>

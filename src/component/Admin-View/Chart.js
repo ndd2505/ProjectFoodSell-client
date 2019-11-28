@@ -1,19 +1,17 @@
 import React from "react";
 import { Line,Bar,Pie } from 'react-chartjs-2';
 import Paper from '@material-ui/core/Paper';
-import dayChart from './daychart';
-import monthChart from './monthchart';
-import yearChart from './yearchart';
+import dayChart from './Chart/daychart';
+import monthChart from './Chart/monthchart';
+import yearChart from './Chart/yearchart';
 
 export default class Chart extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
-            datayear:[
-                61759412,
-                48104523
-                ],
+            statuschart: {},
+            monthchart: {},
             datamonth:[
                 6175941,
                 4810453,
@@ -46,23 +44,16 @@ export default class Chart extends React.Component{
                 7921451,
                 8231376,
                 ],
-                dataoveryear:[
-                    112343,
-                    101200,
-                    101230,
-                    200000,
-                    104560,
-                    134500,
-                    166000,
-                    152540,
-                    175400,
-                    190000,
-                    113400,
-                    146400,
-                    202938
-                    ],
                 
         }
+    }
+
+
+    componentDidMount(){
+        fetch("/chartstatus")
+        .then((res)=> res.json())
+        .then((row) => this.setState({statuschart: row}))
+        
     }
 
 
@@ -105,11 +96,11 @@ export default class Chart extends React.Component{
                     <Paper className="col-5" style={{backgroundColor:"white", height:'50vw'}}>
                         <Pie
                             height = {400}
-                            data={yearChart(this.state.datayear)}
+                            data={yearChart()}
                             options={{
                                 title:{
                                     display: true,
-                                    text: "Pie Chart Year Statistic", 
+                                    text: "Pie Chart StatusOrders Statistic", 
                                     fontSize: 25
                                 },
                                 maintainAspectRatio: false

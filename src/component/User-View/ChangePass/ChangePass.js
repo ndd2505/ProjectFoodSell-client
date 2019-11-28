@@ -89,7 +89,7 @@ export default function ChangePass(props){
                     {(errorConf === "") ? null : <ErrorIcon /> }
                     {errorConf}
                 </div>
-                <button style={{marginTop:"2vw"}} className="btn btn-success" onClick={()=>valid(submit)}>Hoàn Thành</button>
+                <button style={{marginTop:"2vw", width:"7vw"}} className="btn btn-success" onClick={()=>valid(submit)}>Hoàn Thành</button>
             </div>
         // <div className="form-group" style={{padding:"3vw", margin:"0px"}}>
         //         <label style={{fontSize:"1.1vw", color:"white"}}>Bạn hãy nhập mật khẩu mới</label>

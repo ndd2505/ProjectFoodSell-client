@@ -140,7 +140,7 @@ class UpdateProduct extends React.Component{
                         <div className="col-xs-4 col-4 col-md-4 col-lg-4">
                             <label>ProductType</label>
                             <br/>
-                            <select name="type" className="form-control" value={this.state.type} onChange={(e)=>this.handleInput(e)} >
+                            <select style={{marginRight:"0px"}} name="type" className="form-control" value={this.state.type} onChange={(e)=>this.handleInput(e)} >
                                 <option></option>
                                 <option>Cơm</option>
                                 <option>Mì</option>
